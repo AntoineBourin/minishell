@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:54:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/01/31 14:47:38 by abourin          ###   ########.fr       */
+/*   Updated: 2020/01/31 15:08:24 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 typedef struct			s_environment
 {
 	char				**command;
-	char				**curr_path;
+	char				*curr_path;
 }						t_env;
 
 char		*command_read(t_env *env);
