@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 14:06:25 by abourin           #+#    #+#             */
-/*   Updated: 2020/01/31 14:59:40 by abourin          ###   ########.fr       */
+/*   Updated: 2020/01/31 15:08:38 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static int	init_env_path(t_env *env)
 		return (0);
 	curr_path[0] = '~';
 	curr_path[1] = '\0';
-	env->curr_path = &curr_path;
+	env->curr_path = curr_path;
 	return (1);
 }
 
 static void	print_curr_path(t_env *env)
 {
-	ft_putstr_fd(*(env->curr_path), 1);
+	ft_putstr_fd(env->curr_path, 1);
 	ft_putchar_fd(' ', 1);
 }
 
