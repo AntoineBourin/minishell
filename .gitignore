@@ -1,2 +1,4 @@
 minishell
 srcs/*.o
+srcs/libft/*.o
+srcs/libft/libft.a
