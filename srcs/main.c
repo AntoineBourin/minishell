@@ -18,6 +18,8 @@ int		main(int av, char **ac)
 	(void)av;
 	(void)ac;
 
+	move_init(&env);									//init le dossier de depart a "/Users/"
+	printf("%s\n", env.curr_path);						//equivaut au pwd
 	move("/Users/nveron", 0, &env);						//equivaut au deplacement
 	move(NULL, 1, &env);								//equivaut au pwd
 	move("/Users/nveron/Desktop/minishell", 0, &env);	//equivaut au deplacement

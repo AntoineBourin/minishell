@@ -26,6 +26,7 @@ typedef struct			s_environment
 }						t_env;
 
 char		*command_read(t_env *env);
+void    	move_init(t_env *env);
 void		move(char *str, int pwd, t_env *env);
 
 #endif
