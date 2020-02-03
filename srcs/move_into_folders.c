@@ -42,7 +42,13 @@ void    move(char *str, int pwd, t_env *env)
 	    check_error = chdir(str);
         buff = getcwd(buff, 1000000);
         if (check_error != 0)
-            ft_putstr_fd(strerror(ENOTDIR), 1);
+        {
+            ft_putstr_fd("cd: ", 1);
+            ft_putstr_fd(strerror(ENOENT), 1);
+            ft_putstr_fd(": ", 1);
+            ft_putstr_fd(str, 1);
+            ft_putchar_fd('\n', 1);
+        }
         free(env->curr_path);
         env->curr_path = NULL;
         if (!(env->curr_path = malloc(sizeof(char) * ft_strlen(buff))))

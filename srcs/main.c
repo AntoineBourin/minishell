@@ -24,5 +24,5 @@ int		main(int av, char **ac)
 	move(NULL, 1, &env);								//equivaut au pwd
 	move("/Users/nveron/Desktop/minishell", 0, &env);	//equivaut au deplacement
 	printf("\n%s\n", env.curr_path);					//le path est directement mis dans env.curr_path
-	//command_read(&env);
+	command_read(&env);
 }
