@@ -12,22 +12,26 @@
 
 #include "minishell.h"
 
-void    move(char *str, int pwd)
+void    move(char *str, int pwd, t_env *env)
 {
 	int check_error;
 	char *buff;
+    (void)env;
 
 	buff = NULL;
+    buff = getcwd(buff, 1000000);
     if (pwd != 0 && str == NULL)
-	    ft_putstr_fd(getcwd(buff, 1000000), 1);
+	    ft_putstr_fd(buff, 1);
     if (pwd == 0 && str != NULL)
     {
 	    check_error = chdir(str);
         if (check_error != 0)
-        {
             ft_putstr_fd(strerror(ENOTDIR), 1);
-
+       if (env->curr_path == NULL)
+        {
+            if (!(env->curr_path = malloc(sizeof(char) * ft_strlen(buff))))
+		        return ;
+            env->curr_path = buff;
         }
-    }
-	
+    }	
 }

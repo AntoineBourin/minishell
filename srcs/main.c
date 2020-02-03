@@ -14,10 +14,13 @@
 
 int		main(int av, char **ac)
 {
-	//t_env		env;
+	t_env		env;
 	(void)av;
 	(void)ac;
-	move("/Users/nveron", 0);
-	move(NULL, 1);
+
+	move("/Users/nveron", 0, &env);						//equivaut au deplacement
+	move(NULL, 1, &env);								//equivaut au pwd
+	move("/Users/nveron/Desktop/minishell", 0, &env);	//equivaut au deplacement
+	printf("\n%s\n", env.curr_path);					//le path est directement mis dans env.curr_path
 	//command_read(&env);
 }
