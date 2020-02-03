@@ -12,6 +12,7 @@
 
 SRC_NAME += main.c
 SRC_NAME += command_read.c
+SRC_NAME += move_into_folders.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
