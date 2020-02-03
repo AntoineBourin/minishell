@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <errno.h>  
 # include "libft.h"
 
 typedef struct			s_environment
@@ -25,5 +26,6 @@ typedef struct			s_environment
 }						t_env;
 
 char		*command_read(t_env *env);
+void		move(char *str, int pwd);
 
 #endif
