@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 14:06:25 by abourin           #+#    #+#             */
-/*   Updated: 2020/01/31 15:08:38 by nveron           ###   ########.fr       */
+/*   Updated: 2020/02/04 13:36:02 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	command_read(t_env *env)
 	while ((bytes_readen = read(0, buff, 4095)) > 0)
 	{
 		buff[bytes_readen] = '\0';
-		if (ft_strncmp(buff, "cd", 2) == 0)
-			cd_split(env, buff);
-		//printf("bytes %d || buff : %s\n\n", bytes_readen, buff);		//au lieu de faire un printf, ici faire un trie pour envoyer la commande avec la fonction qui l'execute
 		if (bytes_readen < 4095)
+		{
+			command_middleware(env, buff);
 			print_curr_path(env);
+		}
 	}
 }
 
