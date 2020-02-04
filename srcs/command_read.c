@@ -26,7 +26,7 @@ void	command_read(t_env *env)
 	print_curr_path(env);
 	while ((bytes_readen = read(0, buff, 4095)) > 0)
 	{
-		buff[bytes_readen] = '\0';
+		buff[bytes_readen - 1] = '\0';
 		if (bytes_readen < 4095)
 		{
 			command_middleware(env, buff);
@@ -51,6 +51,6 @@ void	cd_split(t_env *env, char *buff)
 		i++;
 		j++;
 	}
-	str[j - 1] = '\0';
+	str[j] = '\0';
 	move(str, 0, env);	
 }

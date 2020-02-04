@@ -30,4 +30,5 @@ void    	move_init(t_env *env);
 void		move(char *str, int pwd, t_env *env);
 void		cd_split(t_env *env, char *buff);
 void		command_middleware(t_env *env, char *input);
+void    	printf_error(char *name, int error, char *str, char *errorstr);
 #endif
