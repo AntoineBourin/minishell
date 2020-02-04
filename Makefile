@@ -6,13 +6,14 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/01/31 14:52:25 by abourin          ###   ########.fr        #
+#    Updated: 2020/02/04 13:42:46 by abourin          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 SRC_NAME += main.c
 SRC_NAME += command_read.c
 SRC_NAME += move_into_folders.c
+SRC_NAME += middleware.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
@@ -27,7 +28,7 @@ NAME = minishell
 
 CC = GCC
 
-CFLAGS = -Wall -Wextra -Werror -Isrcs -Isrcs/libft
+CFLAGS = -Wall -Wextra -fsanitize=address -g3 -Isrcs -Isrcs/libft
 
 .c .o: 	
 		@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}

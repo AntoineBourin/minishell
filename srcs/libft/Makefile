@@ -6,7 +6,7 @@
 #    By: nveron <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 10:45:41 by nveron            #+#    #+#              #
-#    Updated: 2019/11/13 11:33:44 by nveron           ###   ########.fr        #
+#    Updated: 2020/02/04 13:37:35 by abourin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,14 +50,14 @@ SRCS += get_next_line_utils.c
 SRCS += ft_split_space.c
 
 
-SRCSBONUS += ft_lstnew_bonus.c
-SRCSBONUS += ft_lstadd_front_bonus.c
-SRCSBONUS += ft_lstsize_bonus.c
-SRCSBONUS += ft_lstlast_bonus.c
-SRCSBONUS += ft_lstadd_back_bonus.c
-SRCSBONUS += ft_lstdelone_bonus.c
-SRCSBONUS += ft_lstclear_bonus.c
-SRCSBONUS += ft_lstiter_bonus.c
+SRCS += ft_lstnew_bonus.c
+SRCS += ft_lstadd_front_bonus.c
+SRCS += ft_lstsize_bonus.c
+SRCS += ft_lstlast_bonus.c
+SRCS += ft_lstadd_back_bonus.c
+SRCS += ft_lstdelone_bonus.c
+SRCS += ft_lstclear_bonus.c
+SRCS += ft_lstiter_bonus.c
 
 OBJS = ${SRCS:.c=.o}
 
