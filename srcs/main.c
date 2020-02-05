@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:49:10 by abourin           #+#    #+#             */
-/*   Updated: 2020/01/31 15:00:12 by nveron           ###   ########.fr       */
+/*   Updated: 2020/02/05 14:14:56 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		main(int av, char **ac)
 	(void)av;
 	(void)ac;
 
+	env.prog_name = ac[0];
 	move_init(&env);									//init le dossier de depart a "/Users/"
 	/*printf("%s\n", env.curr_path);						//equivaut au pwd
 	move("/Users/nveron", 0, &env);						//equivaut au deplacement
