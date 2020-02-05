@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:12:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/05 12:02:37 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/05 14:16:16 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,15 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 		cd_split(env, str);
 	else if (ft_strncmp(cop, "pwd", 3) == 0)
 		command->result = pwd(env, str);
+	else if (is_command_path_to_file(cop) != -1)
+	{
+		if (is_command_path_to_file(cop) == 2)
+			printf_error(env->prog_name, 0, "is a directory", cop);
+		else
+			command->result = execute_binary_file(cop, str);
+	}
 	else
-		printf_error("Minishell", 0, str, "Command not found");
+		printf_error(env->prog_name, 0, str, "Command not found");
 }
 
 static void	ft_sort(t_env *env, t_list *command)
