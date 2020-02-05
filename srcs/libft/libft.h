@@ -6,7 +6,7 @@
 /*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:31:03 by nveron            #+#    #+#             */
-/*   Updated: 2019/11/14 11:59:20 by nveron           ###   ########.fr       */
+/*   Updated: 2020/02/05 11:29:04 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void				ft_putnbr_fd(int n, int fd);
 typedef struct		s_list
 {
 	void			*content;
+	void			*result;
+	void			*separator;
 	struct s_list	*next;
 }					t_list;
 t_list				*ft_lstnew(void *content);
