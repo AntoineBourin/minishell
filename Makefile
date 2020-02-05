@@ -19,6 +19,7 @@ SRC_NAME += commands_result.c
 SRC_NAME += execute_binary.c
 SRC_NAME += env_variable.c
 SRC_NAME += args_helper.c
+SRC_NAME += echo.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

@@ -49,4 +49,6 @@ char		*execute_binary_file(char *path, char *args);
 void		export_env(t_env *env, char *cmd, char *args);
 char		*get_arg_quotes(char *arg, char charset);
 char		*display_env_list(t_env *env);
+char    	*echo_main(t_env *env, char *str);
+int     	check_arg_n(char *str);
 #endif
