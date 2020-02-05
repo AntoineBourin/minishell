@@ -1,32 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_binary.c                                   :+:      :+:    :+:   */
+/*   args_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/05 12:20:08 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/05 14:38:02 by abourin          ###   ########.fr       */
+/*   Created: 2020/02/05 15:21:08 by abourin           #+#    #+#             */
+/*   Updated: 2020/02/05 15:37:37 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		is_command_path_to_file(char *path)
+char	*get_arg_quotes(char *arg, char charset)
 {
-	struct stat		sb;
-	int				res;
-	
-	res = stat(path, &sb);
-	return (S_ISDIR(sb.st_mode) ? 2 : res);
-}
+	int		is_quoted;
+	int		i;
 
-char	*execute_binary_file(char *path, char *args)
-{
-	int	error;
-
-	// Use split to get all args and give it to binary
-	error = execve(path, NULL, NULL);
-	printf_error("Minishell", errno, path, NULL);
+	i = 0;
+	if (arg[0] && arg[0] == '"')
+	{
+		is_quoted = 1;
+		i++;
+	}
+	else
+		is_quoted = 0;
+	while (arg[i])
+	{
+		if (arg[i] == charset)
+		{
+			arg[i] = '\0';
+			return (arg);
+		}
+		if (arg[i] == ' ' && !is_quoted)
+		{
+			arg[i] = '\0';
+			return (arg);
+		}
+		if (arg[i] == '"' && is_quoted)
+		{
+			arg[i] = '\0';
+			return (arg + 1);
+		}
+		i++;
+	}
 	return (NULL);
 }

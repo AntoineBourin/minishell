@@ -6,7 +6,7 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/02/05 12:24:25 by abourin          ###   ########.fr        #
+#    Updated: 2020/02/05 15:30:10 by abourin          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -17,6 +17,8 @@ SRC_NAME += middleware.c
 SRC_NAME += pwd.c
 SRC_NAME += commands_result.c
 SRC_NAME += execute_binary.c
+SRC_NAME += env_variable.c
+SRC_NAME += args_helper.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
