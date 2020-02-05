@@ -6,7 +6,7 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/02/04 13:42:46 by abourin          ###   ########.fr        #
+#    Updated: 2020/02/05 12:05:50 by abourin          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,6 +14,8 @@ SRC_NAME += main.c
 SRC_NAME += command_read.c
 SRC_NAME += move_into_folders.c
 SRC_NAME += middleware.c
+SRC_NAME += pwd.c
+SRC_NAME += commands_result.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
@@ -44,9 +46,11 @@ bonus: ${NAME}
 
 clean:
 		${RM} ${OBJS}
+		cd srcs/libft && make clean
 
 fclean: clean
 		${RM} ${NAME}
+		cd srcs/libft && make fclean
 
 re:		fclean all
 
