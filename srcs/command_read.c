@@ -18,13 +18,27 @@ static void	print_curr_path(t_env *env)
 	ft_putstr_fd(" : ", 1);
 }
 
+void	ft_exit(int i)
+{
+	char *str;
+
+	str = NULL;
+	str = getcwd(str, 1000000);
+	write(1, "\n", 1);
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd(" : ", 1);
+}
+
+
 void	command_read(t_env *env)
 {
 	char	buff[4096];
 	int		bytes_readen;
 	char	*translated_input;
 
+	
 	print_curr_path(env);
+	signal (SIGINT, ft_exit);
 	while ((bytes_readen = read(0, buff, 4095)) > 0)
 	{
 		buff[bytes_readen - 1] = '\0';
@@ -35,6 +49,7 @@ void	command_read(t_env *env)
 			print_curr_path(env);
 		}
 	}
+	
 }
 
 void	cd_split(t_env *env, char *buff)
