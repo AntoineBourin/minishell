@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:49:10 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/05 14:45:01 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/06 15:05:06 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_env_variables(t_env_variable *env_variables, t_env *env)
 {
-	env_variables->name = NULL;
-	env_variables->content = NULL;
+	env_variables->name = "PATH";
+	env_variables->content = "/Users/abourin/Desktop";
 	env_variables->next = NULL;
 	env->env_variables = env_variables;
 }

@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:12:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 12:29:22 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/06 14:56:00 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 		else
 			command->result = execute_binary_file(cop, str);
 	}
+	else if (command_path_to_file_with_env(cop, env) == 0)
+		command->result = execute_env_binary_file(str, env);
 	else
 		printf_error(env->prog_name, 0, str, "Command not found");
 }

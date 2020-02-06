@@ -6,7 +6,7 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/02/06 12:44:06 by abourin          ###   ########.fr        #
+#    Updated: 2020/02/06 14:41:26 by abourin          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -16,7 +16,8 @@ SRC_NAME += commands/move_into_folders.c
 SRC_NAME += middleware.c
 SRC_NAME += commands/pwd.c
 SRC_NAME += commands_result.c
-SRC_NAME += execute_binary.c
+SRC_NAME += commands/execute_binary.c
+SRC_NAME += commands/exec_binary_with_env.c
 SRC_NAME += commands/env_variable.c
 SRC_NAME += args_helper.c
 SRC_NAME += commands/echo.c
