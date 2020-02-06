@@ -69,7 +69,10 @@ void	cd_split(t_env *env, char *buff)
 		j++;
 	}
 	str[j] = '\0';
-	if (str[0] == '\0')
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] == '\0')
 		move(NULL, 0, env);
 	else
 		move(str, 0, env);
