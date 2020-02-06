@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 12:35:56 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 13:55:47 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/06 15:54:52 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*env_translator(char *user_input, t_env *env)
 	ft_memcpy(res, user_input, ft_strlen(user_input));
 	res[ft_strlen(user_input)] = '\0';
 	i = 0;
-	while (res[i])
+	while (res && res[i])
 	{
 		if (res[i] == '$')
 		{

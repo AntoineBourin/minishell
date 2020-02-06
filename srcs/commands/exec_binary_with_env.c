@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:33:13 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 15:05:34 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/06 16:36:10 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ char	*execute_env_binary_file(char *path, t_env *env)
 
 	full_path = get_env_full_path(path, env);
 	execve(full_path, NULL, NULL);
+//	exit(EXIT_FAILURE);
 	return (NULL);
 }
