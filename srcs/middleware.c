@@ -26,6 +26,8 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 		command->result = pwd(env, str);
 	else if (ft_strncmp(cop, "echo", 4) == 0)
 		command->result = echo_main(env, str);
+	else if (ft_strncmp(cop, "exit", 4) == 0)
+		command->result = "exit";
 	else if (is_command_path_to_file(cop) != -1)
 	{
 		if (is_command_path_to_file(cop) == 2)
