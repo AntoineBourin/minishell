@@ -6,7 +6,7 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/02/06 11:55:52 by abourin          ###   ########.fr        #
+#    Updated: 2020/02/06 12:10:51 by abourin          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -20,6 +20,7 @@ SRC_NAME += execute_binary.c
 SRC_NAME += commands/env_variable.c
 SRC_NAME += args_helper.c
 SRC_NAME += commands/echo.c
+SRC_NAME += commands/unset.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
