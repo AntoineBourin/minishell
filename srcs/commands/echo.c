@@ -35,7 +35,7 @@ int     check_arg_n(char *str)
         i++;
     }
     if (a >= 2 && str[i - 1] == 'n' && str[i - 2] == '-')
-        return (a);
+        return (i);
     return (0);
 }
 char    *echo_main(t_env *env, char *str)
@@ -50,10 +50,12 @@ char    *echo_main(t_env *env, char *str)
         return (NULL);
     while (str[i] == ' ')
         i++;
-    i += check_arg_n(str);
     if (check_arg_n(str) > 0)
-        while (str[i] == ' ')
-            i++;
+        i += check_arg_n(str);
+    else
+        i += 5;
+    while (str[i] == ' ')
+        i++;
     while (str[i])
     {
         if (str[i] != '"' && str[i] != 39)
@@ -64,5 +66,7 @@ char    *echo_main(t_env *env, char *str)
        i++;
     }
     ret[j] = '\0';
+    if (ret[0] == '\0')
+        return (NULL);
     return (ret);
 }
