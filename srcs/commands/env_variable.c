@@ -59,6 +59,7 @@ char		*display_env_list(t_env *env)
 	char			*result;
 	char			*tmp;
 
+	env->check = 42;
 	if (!(result = malloc(sizeof(char) * 1)))
 		return (NULL);
 	result[0] = '\0';
