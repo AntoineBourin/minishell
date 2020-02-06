@@ -43,22 +43,25 @@ char    *echo_main(t_env *env, char *str)
     int i;
     int j;
     char *ret;
+    
     i = 0;
     j = 0;
     if (!(ret = malloc (ft_strlen(str) + 1)))
         return (NULL);
     while (str[i] == ' ')
         i++;
-    i += 5;
-    i += check_arg_n(str);
+    i += 5 + check_arg_n(str);
     if (check_arg_n(str) > 0)
         while (str[i] == ' ')
             i++;
     while (str[i])
     {
-       ret[j] = str[i];
+        if (str[i] != '"' && str[i] != 39)
+        {    
+            ret[j] = str[i];
+            j++;
+        }
        i++;
-       j++;
     }
     ret[j] = '\0';
     return (ret);
