@@ -49,7 +49,6 @@ void	command_read(t_env *env)
 			print_curr_path(env);
 		}
 	}
-	
 }
 
 void	cd_split(t_env *env, char *buff)
@@ -58,10 +57,11 @@ void	cd_split(t_env *env, char *buff)
 	int i;
 	int j;
 
-	i = 3;
+	i = 2;
 	j = 0;
-	if ((!(str = malloc(ft_strlen(buff) * sizeof(char)))) || (buff[2] != ' '))
-		return;
+	if ((!(str = malloc(ft_strlen(buff) * sizeof(char)))) && ((buff[2] != ' ') || (buff[2] != '\0')))
+		return ;
+	
 	while(buff[i])
 	{
 		str[j] = buff[i];
@@ -69,5 +69,9 @@ void	cd_split(t_env *env, char *buff)
 		j++;
 	}
 	str[j] = '\0';
-	move(str, 0, env);	
+	if (str[0] == '\0')
+		move(NULL, 0, env);
+	else
+		move(str, 0, env);
+	
 }

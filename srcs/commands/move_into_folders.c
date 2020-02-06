@@ -49,12 +49,25 @@ void    move(char *str, int pwd, t_env *env)
 
     i = 0;
 	buff = NULL;
+    if (str == NULL && pwd == 0)
+    {
+        check_error = chdir("/Users/");
+        buff = getcwd(buff, 1000000);
+        if (check_error != 0)
+            printf_error("cd", ENOENT, str, NULL);
+        free(env->curr_path);
+        env->curr_path = NULL;
+        if (!(env->curr_path = malloc(sizeof(char) * ft_strlen(buff))))
+		    return ;
+        env->curr_path = buff;
+        return ;
+    }
     while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r' || *str == '\v' || *str == '\f' )
 		str++;
     buff = getcwd(buff, 1000000);
     if (pwd != 0 && str == NULL)
 	    ft_putstr_fd(buff, 1);
-    if (pwd == 0 && str != NULL)
+    else if (pwd == 0 && str != NULL)
     {
 	    check_error = chdir(str);
         buff = getcwd(buff, 1000000);
@@ -65,5 +78,5 @@ void    move(char *str, int pwd, t_env *env)
         if (!(env->curr_path = malloc(sizeof(char) * ft_strlen(buff))))
 		    return ;
         env->curr_path = buff;
-    }	
+    }
 }

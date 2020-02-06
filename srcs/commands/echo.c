@@ -30,7 +30,7 @@ int     check_arg_n(char *str)
         if (a == 2 && str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != '\r' && str[i] != '\v' && str[i] != '\f' && str[i] != '\0')
                 return (0);
         if (a == 3)
-            return (a);
+            return (i);
         a++;
         i++;
     }
@@ -43,14 +43,14 @@ char    *echo_main(t_env *env, char *str)
     int i;
     int j;
     char *ret;
-    
+
     i = 0;
     j = 0;
     if (!(ret = malloc (ft_strlen(str) + 1)))
         return (NULL);
     while (str[i] == ' ')
         i++;
-    i += 5 + check_arg_n(str);
+    i += check_arg_n(str);
     if (check_arg_n(str) > 0)
         while (str[i] == ' ')
             i++;
