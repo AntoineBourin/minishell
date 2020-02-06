@@ -27,15 +27,20 @@ int     check_arg_n(char *str)
                 return (0);
         if (a == 1 && str[i] != 'n')
                 return (0);
-        if (a == 2 && str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != '\r' && str[i] != '\v' && str[i] != '\f' && str[i] != '\0')
+        if (a == 2 && str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != '\r' && str[i] != '\v' && str[i] != '\f')
                 return (0);
         if (a == 3)
             return (i);
         a++;
         i++;
     }
-    if (a >= 2 && str[i - 1] == 'n' && str[i - 2] == '-')
-        return (i);
+    if (a >= 2)
+    {
+        while (str[i - 1] == ' ')
+            i--;
+        if (str[i - 1] == 'n' && str[i - 2] == '-')
+            return (i);
+    }
     return (0);
 }
 char    *echo_main(t_env *env, char *str)
