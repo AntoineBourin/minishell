@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 15:21:08 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/05 15:37:37 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/06 11:20:00 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,5 @@ char	*get_arg_quotes(char *arg, char charset)
 		}
 		i++;
 	}
-	return (NULL);
+	return (arg);
 }
