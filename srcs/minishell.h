@@ -30,6 +30,7 @@ typedef struct				s_env_variable
 
 typedef struct			s_environment
 {
+	int					check;
 	char				**command;
 	char				*curr_path;
 	char				*prog_name;

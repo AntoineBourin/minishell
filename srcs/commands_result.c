@@ -22,7 +22,8 @@ void	display_commands_result(t_list *commands)
 			if (ft_strncmp(commands->result, "exit", 4) == 0)
 				exit(0);
 			ft_putstr_fd(commands->result, 1);
-			ft_putchar_fd('\n', 1);
+			if (commands->separator == 0)
+				ft_putchar_fd('\n', 1);
 		}
 		commands = commands->next;
 	}

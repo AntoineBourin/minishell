@@ -61,7 +61,6 @@ void	cd_split(t_env *env, char *buff)
 	j = 0;
 	if ((!(str = malloc(ft_strlen(buff) * sizeof(char)))) && ((buff[2] != ' ') || (buff[2] != '\0')))
 		return ;
-	
 	while(buff[i])
 	{
 		str[j] = buff[i];
