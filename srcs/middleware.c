@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:12:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/05 14:59:18 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/06 11:51:01 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 		cd_split(env, str);
 	else if (ft_strncmp(cop, "export", 6) == 0)
 		export_env(env, cop, str);
+	else if (ft_strncmp(cop, "env", 3) == 0)
+		command->result = display_env_list(env);
 	else if (ft_strncmp(cop, "pwd", 3) == 0)
 		command->result = pwd(env, str);
 	else if (is_command_path_to_file(cop) != -1)
