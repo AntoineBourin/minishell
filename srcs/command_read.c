@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 14:06:25 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/05 11:14:04 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/06 13:14:36 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	command_read(t_env *env)
 {
 	char	buff[4096];
 	int		bytes_readen;
+	char	*translated_input;
 
 	print_curr_path(env);
 	while ((bytes_readen = read(0, buff, 4095)) > 0)
@@ -29,7 +30,8 @@ void	command_read(t_env *env)
 		buff[bytes_readen - 1] = '\0';
 		if (bytes_readen < 4095)
 		{
-			command_middleware(env, buff);
+			translated_input = env_translator(buff, env);
+			command_middleware(env, translated_input);
 			print_curr_path(env);
 		}
 	}

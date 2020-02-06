@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:54:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 12:27:15 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/06 13:13:32 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ t_env_variable	*get_env_variable_if_exist(t_env_variable *env_variables,
 								char *name);
 void			remove_env_variable(t_env_variable **env_variables, char *name);
 void			unset(t_env *env, char *cmd, char *args);
+char			*env_translator(char *user_input, t_env *env);
 #endif
