@@ -51,7 +51,10 @@ char    *echo_main(t_env *env, char *str)
     while (str[i] == ' ')
         i++;
     if (check_arg_n(str) > 0)
+    {
         i += check_arg_n(str);
+        env->check = 42;
+    }
     else
         i += 5;
     while (str[i] == ' ')

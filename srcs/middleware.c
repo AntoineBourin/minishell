@@ -14,6 +14,7 @@
 
 static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 {
+	env->check = 0;
 	if (ft_strncmp(cop, "cd", 2) == 0)
 		cd_split(env, str);
 	else if (ft_strncmp(cop, "export", 6) == 0)
@@ -78,6 +79,10 @@ static void	execute_commands(t_list *commands, t_env *env)
 	while (tmp)
 	{
 		ft_sort(env, tmp);
+		if (env->check == 42)
+			tmp->separator = 42;
+		else
+			tmp->separator = 0;
 		tmp = tmp->next;
 	}
 	display_commands_result(commands);

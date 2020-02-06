@@ -26,7 +26,6 @@ int		main(int av, char **ac)
 	t_env_variable	env_variables;
 	(void)av;
 
-	
 	init_env_variables(&env_variables, &env);
 	env.prog_name = ac[0];
 	move_init(&env);									//init le dossier de depart a "/Users/"
