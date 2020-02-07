@@ -16,9 +16,15 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 {
 	env->check = 0;
 	if (ft_strncmp(cop, "cd", 2) == 0)
+	{
 		cd_split(env, str);
+		command->result = NULL;
+	}
 	else if (ft_strncmp(cop, "export", 6) == 0)
+	{
 		export_env(env, cop, str);
+		command->result = NULL;
+	}
 	else if (ft_strncmp(cop, "env", 3) == 0)
 		command->result = display_env_list(env);
 	else if (ft_strncmp(cop, "unset", 5) == 0)
@@ -70,6 +76,61 @@ static void	ft_sort(t_env *env, t_list *command)
 	free(cop);
 	cop = NULL;
 }
+int 	ft_check_red_char(char c)
+{
+	int i;
+	char *str;
+
+	str = "<>|";
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+static void ft_red(t_list *commands, t_env *env, char *str)
+{
+	char *copy;
+	int i;
+	int j;
+
+	j = 0;
+	i = 0;
+	if (!(copy = malloc((ft_strlen(str) + 1) * sizeof(char))))
+		return ;
+	while (str[i])
+	{
+		if (ft_check_red_char(str[i]) != 1)
+		{
+			copy[j] = str[i];
+			j++;
+		}
+		else
+		{
+			copy[j] = '\0';
+			ft_putstr_fd(copy, 1);
+			ft_putchar_fd('\n', 1);
+			//ICI envoyer procedure de trie
+			if (ft_check_red(str + i + 1) == 0)
+			{
+				ft_putstr_fd("mettre dans le fichier : ", 1);
+				ft_putstr_fd(str + i + 1, 1);
+				ft_putchar_fd('\n', 1);
+				//ICI pas d'autre < ou >> ou | 
+				return ;
+			}
+			else
+			{
+				j = 0;
+				//ICI FUSION result actuel et ancien result.
+			}
+		}
+		i++;
+	}
+}
 
 static void	execute_commands(t_list *commands, t_env *env)
 {
@@ -78,14 +139,41 @@ static void	execute_commands(t_list *commands, t_env *env)
 	tmp = commands;
 	while (tmp)
 	{
-		ft_sort(env, tmp);
-		if (env->check == 42)
-			tmp->separator = 42;
+		if (ft_check_red(tmp->content) == 1)
+			ft_red(commands, env, tmp->content);
 		else
-			tmp->separator = 0;
+		{
+			ft_sort(env, tmp);
+			if (env->check == 42)
+				tmp->separator = (void *)42;
+			else
+				tmp->separator = 0;
+		}
 		tmp = tmp->next;
 	}
 	display_commands_result(commands);
+}
+
+int 	ft_check_red(char *str)
+{
+	int i;
+	int j;
+	char *sep;
+
+	i = 0;
+	sep = "<>|";
+	while (str[i])
+	{
+		j = 0;
+		while (sep[j])
+		{
+			if (str[i] == sep[j])
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
 
 void	command_middleware(t_env *env, char *input)
