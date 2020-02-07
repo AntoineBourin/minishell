@@ -36,7 +36,7 @@ typedef struct			s_environment
 	char				*prog_name;
 	t_env_variable		*env_variables;
 }						t_env;
-
+int				ft_check_red(char *str);
 void			command_read(t_env *env);
 void    		move_init(t_env *env);
 void			move(char *str, int pwd, t_env *env);
