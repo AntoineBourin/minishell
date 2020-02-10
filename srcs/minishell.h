@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:54:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 14:55:39 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/10 15:47:03 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct			s_environment
 	char				**command;
 	char				*curr_path;
 	char				*prog_name;
+	char				**data_env;
 	t_env_variable		*env_variables;
 }						t_env;
 int				ft_check_red(char *str);
@@ -46,7 +47,7 @@ void    		printf_error(char *name, int error, char *str, char *errorstr);
 char			*pwd(t_env *env, char *args);
 void			display_commands_result(t_list *commands);
 int				is_command_path_to_file(char *path);
-char			*execute_binary_file(char *path, char *args);
+char			*execute_binary_file(char *path, char *args, t_env *env);
 void			export_env(t_env *env, char *cmd, char *args);
 char			*get_arg_quotes(char *arg, char charset);
 char			*display_env_list(t_env *env);
@@ -58,5 +59,7 @@ void			remove_env_variable(t_env_variable **env_variables, char *name);
 void			unset(t_env *env, char *cmd, char *args);
 char			*env_translator(char *user_input, t_env *env);
 int				command_path_to_file_with_env(char *path, t_env *env);
-char			*execute_env_binary_file(char *path, t_env *env);
+char			*execute_env_binary_file(char *binary, char *path, t_env *env);
+void			push_env_variable_list(t_env_variable *env_v, char *name, char *value);
+char			**get_function_args(char *commannd);
 #endif

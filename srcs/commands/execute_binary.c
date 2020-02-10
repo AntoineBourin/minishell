@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 12:20:08 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 16:54:10 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/10 16:48:32 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,24 @@ int		is_command_path_to_file(char *path)
 	return (S_ISDIR(sb.st_mode) ? 2 : res);
 }
 
-char	*execute_binary_file(char *path, char *args)
+char	*execute_binary_file(char *path, char *args, t_env *env)
 {
 	int		error;
 	pid_t	pid;
 	char	**ac;
 
 	pid = fork();
-	// Use split to get all args and give it to binary
+	ac = get_function_args(args);
 	if (pid == 0)
-		error = execve(path, ac, NULL);
+	{
+		error = execve(path, ac, env->data_env);
+		error == -1 ? printf_error("Minishell", errno, path, NULL) : 0;
+		return (NULL);
+	}
 	else
 	{
 		wait(&pid);
 		return (NULL);
 	}
-	printf_error("Minishell", errno, path, NULL);
 	return (NULL);
 }
