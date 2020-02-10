@@ -6,33 +6,43 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:49:10 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 15:05:06 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/10 16:45:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_env_variables(t_env_variable *env_variables, t_env *env)
+void	init_env_variables(t_env_variable *env_variables, t_env *shell_env,
+					char **env)
 {
+	int		i;
+	int		j;
+
 	env_variables->name = "PATH";
-	env_variables->content = "/Users/abourin/Desktop";
+	env_variables->content = "/Users";
 	env_variables->next = NULL;
-	env->env_variables = env_variables;
+	shell_env->env_variables = env_variables;
+	i = 0;
+	while (env[i])
+	{
+		j = 0;
+		while (env[i][j] && env[i][j] != '=')
+			j++;
+		push_env_variable_list(env_variables, get_arg_quotes(env[i], '='),
+						get_arg_quotes(env[i] + j + 1, 0));
+		i++;
+	}
 }
 
-int		main(int av, char **ac)
+int		main(int av, char **ac, char **env)
 {
-	t_env			env;
+	t_env			shell_env;
 	t_env_variable	env_variables;
 	(void)av;
 
-	init_env_variables(&env_variables, &env);
-	env.prog_name = ac[0];
-	move_init(&env);									//init le dossier de depart a "/Users/"
-	/*printf("%s\n", env.curr_path);					//equivaut au pwd
-	move("/Users/nveron", 0, &env);						//equivaut au deplacement
-	move(NULL, 1, &env);								//equivaut au pwd
-	move("/Users/nveron/Desktop/minishell", 0, &env);	//equivaut au deplacement
-	printf("\n%s\n", env.curr_path);					//le path est directement mis dans env.curr_path*/
-	command_read(&env);
+	shell_env.data_env = env;
+	init_env_variables(&env_variables, &shell_env, env);
+	shell_env.prog_name = ac[0];
+	move_init(&shell_env);
+	command_read(&shell_env);
 }
