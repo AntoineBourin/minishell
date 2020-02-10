@@ -34,13 +34,13 @@ A Makefile is written inside the project to compile library (libft) and program.
 - close --> Close file opened before 
 - fork --> Create child process which runs concurrently with the process that makes the fork() `https://www.geeksforgeeks.org/fork-system-call/`
 - wait --> L'appel système wait() suspend l'exécution du processus appelant jusqu'à ce que l'un de ses fils se termine
-- waitpid --> like wait but you select the PID
+- waitpid --> like wait but you can select the PID
 - wait3 --> 
 - wait4 --> 
-- signal --> a lot of signal
+- signal --> register signals in program and change display on it
 - kill --> (int kill(pid_t pid, int sig);) : L'appel système kill() peut être utilisé pour envoyer n'importe quel signal à n'importe quel processus ou groupe de processus.
 
-- exit --> LOL JUST EXIT
+- exit --> exit processus immediatly
 - getcwd --> (char *getcwd(char *buf, size_t size);) : La fonction getcwd() copie le chemin d'accès absolu du répertoire de travail courant dans la chaîne pointée par buf, qui est de longueur size.
 
 - chdir --> (int chdir(const char *path);) : chdir() remplace le répertoire de travail courant du processus appelant par celui indiqué dans le chemin path.
