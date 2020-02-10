@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 12:35:56 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 15:54:52 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/10 17:43:30 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,15 @@ void	transform_res_env_input(char **res, int index, t_env *env)
 	free(env_name);
 }
 
+void	transform_input_by_last_program_result(char **res, int index, t_env *env)
+{
+	t_env_variable	question_mark;
+
+	question_mark.name = "?";
+	question_mark.content = ft_itoa(WEXITSTATUS(env->last_program_return));
+	replace_env_name_by_value(res, &question_mark, index, index + 1);
+}
+
 char	*env_translator(char *user_input, t_env *env)
 {
 	int		i;
@@ -89,8 +98,12 @@ char	*env_translator(char *user_input, t_env *env)
 	{
 		if (res[i] == '$')
 		{
-			transform_res_env_input(&res, i + 1, env);
+			if (res[i + 1] && res[i + 1] == '?')
+				transform_input_by_last_program_result(&res, i + 1, env);
+			else
+				transform_res_env_input(&res, i + 1, env);
 			i = 0;
+			continue;
 		}
 		i++;
 	}

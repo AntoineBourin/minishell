@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 12:20:08 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/10 16:48:32 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/10 17:44:31 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*execute_binary_file(char *path, char *args, t_env *env)
 	}
 	else
 	{
-		wait(&pid);
+		waitpid(pid, &(env->last_program_return), 0);
 		return (NULL);
 	}
 	return (NULL);

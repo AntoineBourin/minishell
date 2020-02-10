@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:54:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/10 15:47:03 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/10 17:44:14 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct			s_environment
 	char				*curr_path;
 	char				*prog_name;
 	char				**data_env;
+	int					last_program_return;
 	t_env_variable		*env_variables;
 }						t_env;
 int				ft_check_red(char *str);

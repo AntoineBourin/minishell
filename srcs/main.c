@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:49:10 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/10 16:45:09 by marvin           ###   ########.fr       */
+/*   Updated: 2020/02/10 17:10:17 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		main(int av, char **ac, char **env)
 	(void)av;
 
 	shell_env.data_env = env;
+	shell_env.last_program_return = 0;
 	init_env_variables(&env_variables, &shell_env, env);
 	shell_env.prog_name = ac[0];
 	move_init(&shell_env);
