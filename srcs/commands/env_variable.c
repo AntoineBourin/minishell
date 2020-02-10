@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 14:40:31 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 11:49:51 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/10 17:14:34 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_env_variable	*get_env_variable_if_exist(t_env_variable *env_variables,
 	while (env_variables)
 	{
 		if (env_variables->name
-			&& ft_strncmp(env_variables->name, name, 4096) == 0)
+			&& ft_strncmp(env_variables->name, name, ft_strlen(name)) == 0)
 			return (env_variables);
 		env_variables = env_variables->next;
 	}
