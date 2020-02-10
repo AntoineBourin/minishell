@@ -76,12 +76,10 @@ static void	ft_sort(t_env *env, t_list *command)
 	free(cop);
 	cop = NULL;
 }
-int 	ft_check_red_char(char c)
+int 	ft_check_red_char(char c, char *str)
 {
 	int i;
-	char *str;
 
-	str = "<>|";
 	i = 0;
 	while (str[i])
 	{
@@ -90,46 +88,6 @@ int 	ft_check_red_char(char c)
 		i++;
 	}
 	return (0);
-}
-static void ft_red(t_list *commands, t_env *env, char *str)
-{
-	char *copy;
-	int i;
-	int j;
-
-	j = 0;
-	i = 0;
-	if (!(copy = malloc((ft_strlen(str) + 1) * sizeof(char))))
-		return ;
-	while (str[i])
-	{
-		if (ft_check_red_char(str[i]) != 1)
-		{
-			copy[j] = str[i];
-			j++;
-		}
-		else
-		{
-			copy[j] = '\0';
-			ft_putstr_fd(copy, 1);
-			ft_putchar_fd('\n', 1);
-			//ICI envoyer procedure de trie
-			if (ft_check_red(str + i + 1) == 0)
-			{
-				ft_putstr_fd("mettre dans le fichier : ", 1);
-				ft_putstr_fd(str + i + 1, 1);
-				ft_putchar_fd('\n', 1);
-				//ICI pas d'autre < ou >> ou | 
-				return ;
-			}
-			else
-			{
-				j = 0;
-				//ICI FUSION result actuel et ancien result.
-			}
-		}
-		i++;
-	}
 }
 
 static void	execute_commands(t_list *commands, t_env *env)
