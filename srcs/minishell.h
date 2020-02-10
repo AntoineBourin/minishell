@@ -16,6 +16,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <errno.h>  
@@ -39,6 +40,7 @@ typedef struct			s_environment
 	t_env_variable		*env_variables;
 }						t_env;
 int				ft_check_red(char *str);
+int 			ft_check_red_char(char c, char *str);
 void			command_read(t_env *env);
 void    		move_init(t_env *env);
 void			move(char *str, int pwd, t_env *env);
