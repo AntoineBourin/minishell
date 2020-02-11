@@ -80,9 +80,11 @@ char *red_cut(t_list *commands, t_env *env, char *str)
 
 char *sort_with_red(t_list *commands, t_env *env, char *first, char *second)
 {
-    char *str;
     char *copy;
     int i;
+	int fd;
+	int oldfd;
+	char *str;
 
     i = 0;
     if(!(copy = malloc((ft_strlen(second) + 1) * sizeof(char))))
@@ -93,7 +95,24 @@ char *sort_with_red(t_list *commands, t_env *env, char *first, char *second)
         i++;
     }
     copy[i] = '\0';
-    str = ft_strjoin(first, copy);
+	i = 0;
+	while (first[0] == ' ')
+		first++;
+	while (first[i] && first[i] != ' ')
+		i++;
+	first[i] = '\0';
+	fd = open(first, O_WRONLY | O_APPEND, 0666);
+	if (fd > 0)
+	{
+			str = ft_strjoin("cat", copy);
+			oldfd = dup(1);
+			dup2(fd, 1);
+			red_cut(commands, env, str);
+			dup2(oldfd, 1);
+			close(fd);
+	}
+	else
+    	str = ft_strjoin(first, copy);
     return (str);
 }
 
@@ -109,7 +128,7 @@ char    *red_name(char *str)
     j = 0;
     while (str[i] && str[i] == ' ')
         i++;
-    while (str[i] && ft_check_red_char(str[i], "<>|") != 1)
+    while (str[i] && str[i] != ' ' && ft_check_red_char(str[i], "<>|") != 1)
     {
         copy[j] = str[i];
         i++;
@@ -127,6 +146,7 @@ void ft_red(t_list *commands, t_env *env, char *str)
 	int i;
 	int j;
     int fd;
+	int oldfd;
 
 	j = 0;
 	i = 0;
@@ -146,28 +166,47 @@ void ft_red(t_list *commands, t_env *env, char *str)
 			copy[j] = '\0';
             if (ft_check_red_char((str + i)[0], "<") == 1)
 			{
-		      	result = sort_with_red(commands, env, copy, str + i + 1);
-                res = 1;
-                while (str[i + 1] && ft_check_red_char(str[i + 1], "<>|") != 1)
+				if (result != NULL)
+					result = ft_strjoin(result, sort_with_red(commands, env, copy, str + i + 1));
+				else
+		      		result = sort_with_red(commands, env, copy, str + i + 1);
+                while (str[i + 1] && ft_check_red(str + i + 1) != 0 && ft_check_red_char(str[i + 1], "<>|") != 1)
                     i++;
-                if (ft_check_red(str + i + 1) == 0)
+                if (result == NULL && ft_check_red(str + i + 1) == 0)
                     result = red_cut(commands, env, result);
 		    }
-		    else if (ft_check_red_char((str + i)[0], ">") == 1)
+		    else if (ft_check_red_char(str[i], ">") == 1 && ft_check_red_char(str[i + 1], ">") != 1)
 		    {
-                if (res == 1)
-                {
-                    fd = open(red_name(str + i + 1), O_WRONLY | O_CREAT | O_TRUNC | O_APPEND, 0666);
-                    //ft_putnbr_fd(fd, 1);
-                    //write(3, "tt", 2);
-                    //ft_putstr_fd(red_cut(commands, env, result), fd);
-                    result = red_cut(commands, env, result);
-                   // ft_putstr_fd("commands, env, result)", fd);
-                    //ft_putnbr_fd(fd, 1);
-                }
+					oldfd = dup(1);
+                    fd = open(red_name(str + i + 1), O_WRONLY | O_CREAT, 0666);
+					dup2(fd, 1);
+					if (result != NULL)
+						red_cut(commands, env, result);
+					else
+						red_cut(commands, env, copy);
+					dup2(oldfd, 1);
+					close(fd);
+					if (ft_check_red(str + i + 1) == 0)
+						while (str[i + 1] && ft_check_red_char(str[i + 1], "<>|") != 1)
+                    		i++;
+	    	}
+			else if (ft_check_red_char(str[i], ">") == 1 && ft_check_red_char(str[i + 1], ">") == 1)
+		    {
+					oldfd = dup(1);
+                    fd = open(red_name(str + i + 2), O_WRONLY | O_CREAT | O_APPEND, 0666);
+					dup2(fd, 1);
+					if (result != NULL)
+						red_cut(commands, env, result);
+					else
+						red_cut(commands, env, copy);
+					dup2(oldfd, 1);
+					close(fd);
+					i++;
+					if (ft_check_red(str + i + 1) == 0)
+						while (str[i + 1] && ft_check_red_char(str[i + 1], "<>|") != 1)
+                    		i++;
 	    	}
 			j = 0;
-			//}
 		}
 		i++;
 	}
