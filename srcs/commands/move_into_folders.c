@@ -18,7 +18,7 @@ void    move_init(t_env *env)
 	char *buff;
     (void)env;
 
-    check_error = chdir("/Users/");
+    check_error = chdir("/Users/nveron/Desktop/minishell2");
 	buff = NULL;
     buff = getcwd(buff, 1000000);
 
