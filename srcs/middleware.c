@@ -20,23 +20,23 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 		cop++;
 	}
 	env->check = 0;
-	if (ft_strncmp(cop, "cd", 2) == 0)
+	if (ft_strncmp(cop, "cd", 3) == 0)
 	{
 		cd_split(env, str);
 		command->result = NULL;
 	}
-	else if (ft_strncmp(cop, "export", 6) == 0)
+	else if (ft_strncmp(cop, "export", 7) == 0)
 	{
 		export_env(env, cop, str);
 		command->result = NULL;
 	}
-	else if (ft_strncmp(cop, "env", 3) == 0)
+	else if (ft_strncmp(cop, "env", 4) == 0)
 		command->result = display_env_list(env);
-	else if (ft_strncmp(cop, "unset", 5) == 0)
+	else if (ft_strncmp(cop, "unset", 6) == 0)
 		unset(env, cop, str);
-	else if (ft_strncmp(cop, "pwd", 3) == 0)
+	else if (ft_strncmp(cop, "pwd", 4) == 0)
 		command->result = pwd(env, str);
-	else if (ft_strncmp(cop, "echo", 4) == 0)
+	else if (ft_strncmp(cop, "echo", 5) == 0)
 		command->result = echo_main(env, str);
 	else if (ft_strncmp(cop, "exit", 5) == 0)
 		command->result = str;

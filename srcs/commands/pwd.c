@@ -14,6 +14,15 @@
 
 char	*pwd(t_env *env, char *args)
 {
-	(void)args;
+	int i;
+
+	i = 0;
+	args += 3;
+	while (args[i])
+	{
+		if (args[i] != ' ')
+			return ("pwd: too many arguments");
+			i++;
+	}
 	return (env->curr_path);
 }
