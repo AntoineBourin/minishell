@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:06:25 by nveron            #+#    #+#             */
-/*   Updated: 2020/02/03 13:08:38 by nveron           ###   ########.fr       */
+/*   Updated: 2020/02/12 13:28:27 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,8 @@ void ft_red(t_list *commands, t_env *env, char *str)
 						while (str[i + 1] && ft_check_red_char(str[i + 1], "<>|") != 1)
                     		i++;
 	    	}
+			else if (ft_check_red_char(str[i], "|") == 1)
+				execute_pipes_command(commands, env, copy, str + i + 1);
 			j = 0;
 		}
 		i++;
