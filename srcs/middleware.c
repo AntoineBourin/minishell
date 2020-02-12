@@ -118,15 +118,24 @@ int 	ft_check_red(char *str)
 	int i;
 	int j;
 	char *sep;
+	int     exp_1;
+    int     exp_2;
 
+
+    exp_1 = -1;
+    exp_2 = -1;
 	i = 0;
 	sep = "<>|";
 	while (str[i])
 	{
+		if (str[i] == 39)
+        	exp_1 *= -1;
+        if (str[i] == 34)
+        	exp_2 *= -1;
 		j = 0;
 		while (sep[j])
 		{
-			if (str[i] == sep[j])
+			if (str[i] == sep[j] && exp_1 < 0 && exp_2 < 0)
 				return (1);
 			j++;
 		}
@@ -144,7 +153,7 @@ void	command_middleware(t_env *env, char *input)
 
 	if (!(comm_list = malloc(sizeof(t_list))))
 		return ;
-	commands = ft_split(input, ';');
+	commands = ft_split_modif(input, ';');
 	comm_list->content = commands[0] ? commands[0] : NULL;
 	comm_list->next = NULL;
 	comm_list->result = NULL;

@@ -24,6 +24,7 @@ SRC_NAME += commands/echo.c
 SRC_NAME += commands/unset.c
 SRC_NAME += translator.c
 SRC_NAME += redirection.c
+SRC_NAME += split_modif.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

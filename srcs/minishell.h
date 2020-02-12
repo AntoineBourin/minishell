@@ -67,4 +67,6 @@ void			push_env_variable_list(t_env_variable *env_v, char *name, char *value);
 char			**get_function_args(char *commannd);
 void			replace_env_name_by_value(char **res, t_env_variable *env,
 									int begin_index, int end_index);
+char			**ft_split_modif(char const *s, char c);
+
 #endif
