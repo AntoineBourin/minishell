@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 13:24:08 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/12 14:46:54 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/12 15:13:46 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	execute_pipes_command(t_list *commands, t_env *env,
 	int		oldfd;
 	char	buffer[4096];
 	int		ret;
+	char	*result;
 
 	// pipefd 1 == write
 	// pipefd 0 == read
@@ -32,7 +33,9 @@ void	execute_pipes_command(t_list *commands, t_env *env,
 		oldfd = dup(1);
 		close(pipefd[0]);
 		dup2(pipefd[1], 1);
-		red_cut(commands, env, command);
+		result = red_cut(commands, env, command);
+		if (result)
+			ft_putstr_fd(result, 1);
 		dup2(oldfd, 0);
 		close(pipefd[1]);
 		exit(0);
@@ -42,7 +45,7 @@ void	execute_pipes_command(t_list *commands, t_env *env,
 		close(pipefd[1]);
 		oldfd = dup(0);
 		dup2(pipefd[0], 0);
-		red_cut(commands, env, piped + 1);
+		result = red_cut(commands, env, piped + 1);
 		dup2(oldfd, 0);
 		close(pipefd[0]);
 		pid = fork();
