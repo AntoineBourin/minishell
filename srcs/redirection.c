@@ -165,6 +165,8 @@ void ft_red(t_list *commands, t_env *env, char *str)
 		}
 		else
 		{
+			while (copy[j] && copy[j - 1] && copy[j - 1] == ' ')
+				j--;
 			copy[j] = '\0';
             if (ft_check_red_char((str + i)[0], "<") == 1)
 			{
