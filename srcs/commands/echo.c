@@ -16,10 +16,10 @@ int     check_arg_n(char *str)
     int a;
     a = 0;
     i = 0;
-    while (str[i] == ' ')
+    while (str[i] && str[i] == ' ')
         i++;
-    i += 5;
-    while (str[i] == ' ')
+    i += 4;
+    while (str[i] && str[i] == ' ')
         i++;
     while (str[i])
     {
@@ -36,7 +36,7 @@ int     check_arg_n(char *str)
     }
     if (a >= 2)
     {
-        while (str[i - 1] == ' ')
+        while (str[i - 1] && str[i - 1] == ' ')
             i--;
         if (str[i - 1] == 'n' && str[i - 2] == '-')
             return (i);
@@ -51,9 +51,10 @@ char    *echo_main(t_env *env, char *str)
 
     i = 0;
     j = 0;
-    if (!(ret = malloc (ft_strlen(str) + 1)))
+    env->check = 0;
+    if (!(ret = malloc (ft_strlen(str) + 2)))
         return (NULL);
-    while (str[i] == ' ')
+    while (str[i] && str[i] == ' ')
         i++;
     if (check_arg_n(str) > 0)
     {
@@ -61,10 +62,10 @@ char    *echo_main(t_env *env, char *str)
         env->check = 42;
     }
     else
-        i += 5;
-    while (str[i] == ' ')
+        i += 4;
+    while (str[i] && str[i] == ' ')
         i++;
-    while (str[i])
+    while (str[i] && str[i])
     {
         if (str[i] != '"' && str[i] != 39)
         {    
@@ -73,8 +74,13 @@ char    *echo_main(t_env *env, char *str)
         }
        i++;
     }
-    ret[j] = '\0';
-    if (ret[0] == '\0')
-        return (NULL);
+    if (env->check == 42)
+        ret[j] = '\0';
+    else
+        ret[j] = '\n';
+    ret[j + 1] = '\0';
+    if (ret[0] == '\0' && env->check != 42)
+        return ("\n");
+    env->check = 42;
     return (ret);
 }
