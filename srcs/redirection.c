@@ -172,7 +172,7 @@ void ft_red(t_list *commands, t_env *env, char *str)
 		      		result = sort_with_red(commands, env, copy, str + i + 1);
                 while (str[i + 1] && ft_check_red(str + i + 1) != 0 && ft_check_red_char(str[i + 1], "<>|") != 1)
                     i++;
-                if (result == NULL && ft_check_red(str + i + 1) == 0)
+                if (ft_check_red(str + i + 1) == 0)
                     result = red_cut(commands, env, result);
 		    }
 		    else if (ft_check_red_char(str[i], ">") == 1 && ft_check_red_char(str[i + 1], ">") != 1)
