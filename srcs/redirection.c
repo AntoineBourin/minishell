@@ -181,9 +181,9 @@ void ft_red(t_list *commands, t_env *env, char *str)
                     fd = open(red_name(str + i + 1), O_WRONLY | O_CREAT, 0666);
 					dup2(fd, 1);
 					if (result != NULL)
-						red_cut(commands, env, result);
+						ft_putstr_fd(red_cut(commands, env, result), 1);
 					else
-						red_cut(commands, env, copy);
+						ft_putstr_fd(red_cut(commands, env, copy), 1);
 					dup2(oldfd, 1);
 					close(fd);
 					if (ft_check_red(str + i + 1) == 0)
@@ -196,9 +196,9 @@ void ft_red(t_list *commands, t_env *env, char *str)
                     fd = open(red_name(str + i + 2), O_WRONLY | O_CREAT | O_APPEND, 0666);
 					dup2(fd, 1);
 					if (result != NULL)
-						red_cut(commands, env, result);
+						ft_putstr_fd(red_cut(commands, env, result), 1);
 					else
-						red_cut(commands, env, copy);
+						ft_putstr_fd(red_cut(commands, env, copy), 1);
 					dup2(oldfd, 1);
 					close(fd);
 					i++;
