@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:54:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/12 11:30:42 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/12 14:21:49 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ char			**get_function_args(char *commannd);
 void			replace_env_name_by_value(char **res, t_env_variable *env,
 									int begin_index, int end_index);
 char			**ft_split_modif(char const *s, char c);
-
+void			execute_pipes_command(t_list *commands, t_env *env,
+							char *command, char *piped);
+char			*red_cut(t_list *commands, t_env *env, char *str);
 #endif

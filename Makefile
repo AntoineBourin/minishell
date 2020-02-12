@@ -6,7 +6,7 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/02/06 14:41:26 by abourin          ###   ########.fr        #
+#    Updated: 2020/02/12 13:31:41 by abourin          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -25,6 +25,7 @@ SRC_NAME += commands/unset.c
 SRC_NAME += translator.c
 SRC_NAME += redirection.c
 SRC_NAME += split_modif.c
+SRC_NAME += commands/pipes.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
