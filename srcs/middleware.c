@@ -14,6 +14,11 @@
 
 static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 {
+	if (cop[0] == 34 || cop[0] == 39)
+	{
+		str++;
+		cop++;
+	}
 	env->check = 0;
 	if (ft_strncmp(cop, "cd", 2) == 0)
 	{
@@ -61,12 +66,17 @@ static void	ft_sort(t_env *env, t_list *command)
 	str = command->content;
 	if (!(cop = malloc(sizeof(char) * (ft_strlen(str) + 1))))
 		return ;
-	while (str[i] == ' ')
+	while (str[i] == ' ' || str[i] == 34 || str[i] == 39)
 		i++;
 	tmp = i;
 	while (str[i] && str[i] != ' '
 	&& str[i] != ';' && str[i] != '\n')
 	{
+		if (str[i] == 34 || str[i] == 39)
+		{
+			cop[j] = ' ';
+			str[i] = ' ';
+		}
 		cop[j] = str[i];
 		i++;
 		j++;

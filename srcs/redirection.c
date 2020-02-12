@@ -14,6 +14,8 @@
 
 char    *ft_army_if_red(t_env *env, char *cop, char *str, t_list *command)
 {
+	if (cop[0] == 34 || cop[0] == 39)
+		cop++;
 	if (ft_strncmp(cop, "cd", 2) == 0)
 	{
 		cd_split(env, str);
