@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 12:35:56 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/10 17:43:30 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/12 11:36:19 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	replace_env_name_by_value(char **res, t_env_variable *env, int begin_index,
 		z++;
 	}
 	tmp[i] = '\0';
-	free(*res);
+	//free(*res); --> TODO free only when transform coming from $ENV, not ~ change directory
 	*res = tmp;
 }
 

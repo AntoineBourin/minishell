@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:12:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/10 15:46:06 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/12 11:07:23 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	ft_sort(t_env *env, t_list *command)
 	free(cop);
 	cop = NULL;
 }
+
 int 	ft_check_red_char(char c, char *str)
 {
 	int i;

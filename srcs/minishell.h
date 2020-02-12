@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:54:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/10 17:44:14 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/12 11:30:42 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,6 @@ int				command_path_to_file_with_env(char *path, t_env *env);
 char			*execute_env_binary_file(char *binary, char *path, t_env *env);
 void			push_env_variable_list(t_env_variable *env_v, char *name, char *value);
 char			**get_function_args(char *commannd);
+void			replace_env_name_by_value(char **res, t_env_variable *env,
+									int begin_index, int end_index);
 #endif
