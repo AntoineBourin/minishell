@@ -82,7 +82,7 @@ char		*display_env_list(t_env *env)
 	return (result);
 }
 
-void	export_env(t_env *env, char *cmd, char *args)
+char *export_env(t_env *env, char *cmd, char *args)
 {
 	char	*env_group;
 	int		i;
@@ -90,10 +90,15 @@ void	export_env(t_env *env, char *cmd, char *args)
 	char	*env_value;
 
 	i = 0;
-	env_group = args + 7;
+	env_group = args + 6;
+	if (env_group[0] == '\0')
+		return (display_env_list(env)); 
 	while (env_group[i] && env_group[i] != '=')
 		i++;
+	if ((env_group + i)[0] == '\0')
+		return (display_env_list(env)); 
 	env_name = get_arg_quotes(env_group, '=');
 	env_value = get_arg_quotes(env_group + i + 1, 0);
 	push_env_variable_list(env->env_variables, env_name, env_value);
+	return (NULL);
 }

@@ -51,7 +51,7 @@ char			*pwd(t_env *env, char *args);
 void			display_commands_result(t_list *commands);
 int				is_command_path_to_file(char *path);
 char			*execute_binary_file(char *path, char *args, t_env *env);
-void			export_env(t_env *env, char *cmd, char *args);
+char 			*export_env(t_env *env, char *cmd, char *args);
 char			*get_arg_quotes(char *arg, char charset);
 char			*display_env_list(t_env *env);
 char    		*echo_main(t_env *env, char *str);
