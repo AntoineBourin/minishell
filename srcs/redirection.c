@@ -15,6 +15,11 @@
 char    *ft_army_if_red(t_env *env, char *cop, char *str, t_list *command)
 {
 	if (cop[0] == 34 || cop[0] == 39)
+	{
+		str++;
+		cop++;
+	}
+	if (cop[0] == 34 || cop[0] == 39)
 		cop++;
 	if (ft_strncmp(cop, "cd", 2) == 0)
 	{
@@ -58,22 +63,40 @@ char *red_cut(t_list *commands, t_env *env, char *str)
 	int 	j;
 	int 	tmp;
     char *result;
+	int exp_1;
+	int exp_2;
 
 	j = 0;
 	i = 0;
+	exp_1 = -1;
+	exp_2 = -1;
 	if (!(cop = malloc(sizeof(char) * (ft_strlen(str) + 1))))
 		return (NULL);
 	while (str[i] == ' ')
 		i++;
 	tmp = i;
-	while (str[i] && str[i] != ' '
-	&& str[i] != ';' && str[i] != '\n')
+	if (str[i] == 34)
+			exp_1 *= -1;
+	if (str[i] == 39)
+			exp_2 *= -1;
+	while (str[i] && ((exp_1 > 0 || exp_2 > 0) || ( str[i] != ' ' && str[i] != '\n')))
 	{
+		if (str[i + 1] == 34 || str[i + 1] == 39)
+		{
+			if (str[i + 1] == 34)
+				exp_1 *= -1;
+			if (str[i + 1] == 39)
+				exp_2 *= -1;
+			cop[j + 1] = ' ';
+			str[i + 1] = ' ';
+		}
 		cop[j] = str[i];
 		i++;
 		j++;
 	}
 	cop[j] = '\0';
+	if (exp_1 > 0 || exp_2 > 0)
+			cop = ft_strjoin(ft_strjoin(" ", "'"), cop);
 	result = ft_army_if_red(env, cop, str + tmp, commands);
 	free(cop);
 	cop = NULL;
@@ -168,7 +191,7 @@ void ft_red(t_list *commands, t_env *env, char *str)
 			while (copy[j] && copy[j - 1] && copy[j - 1] == ' ')
 				j--;
 			copy[j] = '\0';
-            if (ft_check_red_char((str + i)[0], "<") == 1)
+            if (ft_check_red_char(str[i], "<") == 1)
 			{
 				if (result != NULL)
 					result = ft_strjoin(result, sort_with_red(commands, env, copy, str + i + 1));
