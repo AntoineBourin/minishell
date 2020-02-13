@@ -60,28 +60,41 @@ static void	ft_sort(t_env *env, t_list *command)
 	int 	j;
 	int 	tmp;
 	char	*str;
+	int exp_1;
+	int exp_2;
 
 	j = 0;
 	i = 0;
+	exp_1 = -1;
+	exp_2 = -1;
 	str = command->content;
-	if (!(cop = malloc(sizeof(char) * (ft_strlen(str) + 1))))
+	if (!(cop = malloc(sizeof(char) * (ft_strlen(str) + 3))))
 		return ;
-	while (str[i] == ' ' || str[i] == 34 || str[i] == 39)
+	while (str[i] == ' ')
 		i++;
 	tmp = i;
-	while (str[i] && str[i] != ' '
-	&& str[i] != ';' && str[i] != '\n')
+	if (str[i] == 34)
+			exp_1 *= -1;
+	if (str[i] == 39)
+			exp_2 *= -1;
+	while (str[i] && ((exp_1 > 0 || exp_2 > 0) || ( str[i] != ' ' && str[i] != '\n')))
 	{
-		if (str[i] == 34 || str[i] == 39)
+		if (str[i + 1] == 34 || str[i + 1] == 39)
 		{
-			cop[j] = ' ';
-			str[i] = ' ';
+			if (str[i + 1] == 34)
+				exp_1 *= -1;
+			if (str[i + 1] == 39)
+				exp_2 *= -1;
+			cop[j + 1] = ' ';
+			str[i + 1] = ' ';
 		}
 		cop[j] = str[i];
 		i++;
 		j++;
 	}
 	cop[j] = '\0';
+	if (exp_1 > 0 || exp_2 > 0)
+			cop = ft_strjoin(ft_strjoin(" ", "'"), cop);
 	ft_army_if(env, cop, str + tmp, command);
 	free(cop);
 	cop = NULL;
