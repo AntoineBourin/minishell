@@ -27,8 +27,7 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 	}
 	else if (ft_strncmp(cop, "export", 7) == 0)
 	{
-		export_env(env, cop, str);
-		command->result = NULL;
+		command->result = export_env(env, cop, str);
 	}
 	else if (ft_strncmp(cop, "env", 4) == 0)
 		command->result = display_env_list(env);
