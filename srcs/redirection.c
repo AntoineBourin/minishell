@@ -126,7 +126,7 @@ char *sort_with_red(t_list *commands, t_env *env, char *first, char *second)
 	while (first[i] && first[i] != ' ')
 		i++;
 	first[i] = '\0';
-	fd = open(first, O_WRONLY | O_APPEND, 0666);
+	fd = open(first, O_WRONLY | O_APPEND | O_TRUNC, 0666);
 	if (fd > 0)
 	{
 			str = ft_strjoin("cat", copy);
@@ -188,7 +188,7 @@ void ft_red(t_list *commands, t_env *env, char *str)
 		}
 		else
 		{
-			while (copy[j] && copy[j - 1] && copy[j - 1] == ' ')
+			while (j > 1 && copy[j] && copy[j - 1] && copy[j - 1] == ' ')
 				j--;
 			copy[j] = '\0';
             if (ft_check_red_char(str[i], "<") == 1)
@@ -197,7 +197,7 @@ void ft_red(t_list *commands, t_env *env, char *str)
 					result = ft_strjoin(result, sort_with_red(commands, env, copy, str + i + 1));
 				else
 		      		result = sort_with_red(commands, env, copy, str + i + 1);
-                while (str[i + 1] && ft_check_red(str + i + 1) != 0 && ft_check_red_char(str[i + 1], "<>|") != 1)
+                while (str[i] && str[i + 1] && ft_check_red(str + i + 1) != 0 && ft_check_red_char(str[i + 1], "<>|") != 1)
                     i++;
                 if (ft_check_red(str + i + 1) == 0)
                     result = red_cut(commands, env, result);
@@ -205,7 +205,7 @@ void ft_red(t_list *commands, t_env *env, char *str)
 		    else if (ft_check_red_char(str[i], ">") == 1 && ft_check_red_char(str[i + 1], ">") != 1)
 		    {
 					oldfd = dup(1);
-                    fd = open(red_name(str + i + 1), O_WRONLY | O_CREAT, 0666);
+                    fd = open(red_name(str + i + 1), O_WRONLY | O_CREAT | O_TRUNC, 0666);
 					dup2(fd, 1);
 					if (result != NULL)
 						ft_putstr_fd(red_cut(commands, env, result), 1);
