@@ -71,4 +71,5 @@ char			**ft_split_modif(char const *s, char c);
 void			execute_pipes_command(t_list *commands, t_env *env,
 							char *command, char *piped);
 char			*red_cut(t_list *commands, t_env *env, char *str);
+char			*remove_quote_arg(char *str);
 #endif
