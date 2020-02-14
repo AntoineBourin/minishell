@@ -89,7 +89,8 @@ char	**get_function_args(char *command)
 			i++;
 			while (command[i] && command[i] != '"')
                 i++;
-			i++;
+			while (command[i] && command[i] == '"')
+				i++;
 		}
 		else
 		{

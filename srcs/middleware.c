@@ -44,7 +44,7 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 		if (is_command_path_to_file(cop) == 2)
 			printf_error(env->prog_name, 0, "is a directory", cop);
 		else
-			command->result = execute_binary_file(cop, str, env);
+			command->result = execute_binary_file(cop, remove_quote_arg(str), env);
 	}
 	else if (command_path_to_file_with_env(cop, env) == 0)
 		command->result = execute_env_binary_file(cop, remove_quote_arg(str), env);
