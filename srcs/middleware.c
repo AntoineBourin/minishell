@@ -47,7 +47,7 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 			command->result = execute_binary_file(cop, str, env);
 	}
 	else if (command_path_to_file_with_env(cop, env) == 0)
-		command->result = execute_env_binary_file(cop, str, env);
+		command->result = execute_env_binary_file(cop, remove_quote_arg(str), env);
 	else
 		printf_error(env->prog_name, 0, str, "Command not found");
 }
