@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:06:25 by nveron            #+#    #+#             */
-/*   Updated: 2020/02/12 13:28:27 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/14 14:56:55 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,11 @@ void ft_red(t_list *commands, t_env *env, char *str)
                     		i++;
 	    	}
 			else if (ft_check_red_char(str[i], "|") == 1)
-				execute_pipes_command(commands, env, copy, str + i + 1);
+			{
+				env->buff = NULL;
+				execute_pipes_command(commands, env, result, copy, str + i + 1);
+				return ;
+			}
 			j = 0;
 		}
 		i++;
