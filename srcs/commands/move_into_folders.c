@@ -62,6 +62,54 @@ void	replace_tild_by_home(char **str, t_env *env)
 	home->name = "HOME";
 }
 
+char *remove_quote_arg(char *str)
+{
+    int i;
+    int j;
+    int check34;
+    int check39;
+    char *copy;
+
+    if(!(copy = malloc(sizeof(char) * (ft_strlen(str) + 1))))
+        return (NULL);
+    i = 0;
+    check34 = 0;
+    check39 = 0;
+    while (str[i])
+    {
+        if (str[i] == 34)
+            check34++;
+        if (str[i] == 39)
+            check39++;
+        i++;
+    }
+    i = 0;
+    j = 0;
+    if (check34 % 2 != 0)
+        check34--;
+     if (check39 % 2 != 0)
+        check39--;
+    while (str[i])
+    {
+        if ((str[i] == 39 && check39 > 0 ) || (str[i] == 34 && check34 > 0))
+        {
+            if (str[i] == 34)
+                check34--;
+            if (str[i] == 39)
+                check39--;
+            i++;
+        }
+        else
+        {
+            copy[j] = str[i];
+            j++;
+            i++;
+        }
+    }
+    copy[j] = '\0';
+    return (copy);
+}
+
 void    move(char *str, int pwd, t_env *env)
 {
 	int		check_error;
@@ -77,6 +125,7 @@ void    move(char *str, int pwd, t_env *env)
     }
     while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r' || *str == '\v' || *str == '\f' )
 		str++;
+    str = remove_quote_arg(str);
 	replace_tild_by_home(&str, env);
     buff = getcwd(buff, 1000000);
     if (pwd != 0 && str == NULL)
