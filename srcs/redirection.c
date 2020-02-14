@@ -163,6 +163,31 @@ char    *red_name(char *str)
     return (copy);
 }
 
+char	*check_exeption_chiante(char *ref, char *str, char *name)
+{
+	int i;
+	int j;
+	char *new;
+	
+	if (!(new = malloc((ft_strlen(ref) + 1) * sizeof(char))))
+		return (NULL);
+	i = 0;
+	j = 0;
+	while(*str && *str == ' ')
+		str++;
+	while(*str && *str != ' ')
+		str++;
+	while(str[i] && ft_check_red_char(str[i + 1], "<>|") != 1)
+	{
+		new[j] = str[i];
+		i++;
+		j++;
+	}
+	new[j] = '\0';
+	str = ft_strjoin(ref, new);
+	return (str);
+}
+
 void ft_red(t_list *commands, t_env *env, char *str)
 {
 	char *copy;
@@ -210,7 +235,7 @@ void ft_red(t_list *commands, t_env *env, char *str)
 					if (result != NULL)
 						ft_putstr_fd(red_cut(commands, env, result), 1);
 					else
-						ft_putstr_fd(red_cut(commands, env, copy), 1);
+						ft_putstr_fd(red_cut(commands, env, check_exeption_chiante(copy, str + i + 1, "D")), 1);
 					dup2(oldfd, 1);
 					close(fd);
 					if (ft_check_red(str + i + 1) == 0)
