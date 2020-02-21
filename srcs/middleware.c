@@ -120,7 +120,7 @@ static void	execute_commands(t_list *commands, t_env *env)
 	tmp = commands;
 	while (tmp)
 	{
-		if (ft_check_red(tmp->content) == 1)
+		if (ft_check_red(tmp->content, "<>|") == 1)
 			ft_red(commands, env, tmp->content);
 		else
 		{
@@ -135,19 +135,16 @@ static void	execute_commands(t_list *commands, t_env *env)
 	display_commands_result(commands);
 }
 
-int 	ft_check_red(char *str)
+int 	ft_check_red(char *str, char *sep)
 {
 	int i;
 	int j;
-	char *sep;
 	int     exp_1;
     int     exp_2;
-
 
     exp_1 = -1;
     exp_2 = -1;
 	i = 0;
-	sep = "<>|";
 	while (str[i])
 	{
 		if (str[i] == 39)

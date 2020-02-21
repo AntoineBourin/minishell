@@ -222,9 +222,9 @@ void ft_red(t_list *commands, t_env *env, char *str)
 					result = ft_strjoin(result, sort_with_red(commands, env, copy, str + i + 1));
 				else
 		      		result = sort_with_red(commands, env, copy, str + i + 1);
-                while (str[i] && str[i + 1] && ft_check_red(str + i + 1) != 0 && ft_check_red_char(str[i + 1], "<>|") != 1)
+                while (str[i] && str[i + 1] && ft_check_red(str + i + 1, "<>|") != 0 && ft_check_red_char(str[i + 1], "<>|") != 1)
                     i++;
-                if (ft_check_red(str + i + 1) == 0)
+                if (ft_check_red(str + i + 1, "<>|") == 0)
                     result = red_cut(commands, env, result);
 		    }
 		    else if (ft_check_red_char(str[i], ">") == 1 && ft_check_red_char(str[i + 1], ">") != 1)
@@ -238,7 +238,7 @@ void ft_red(t_list *commands, t_env *env, char *str)
 						ft_putstr_fd(red_cut(commands, env, check_exeption_chiante(copy, str + i + 1, "D")), 1);
 					dup2(oldfd, 1);
 					close(fd);
-					if (ft_check_red(str + i + 1) == 0)
+					if (ft_check_red(str + i + 1, "<>|") == 0)
 						while (str[i + 1] && ft_check_red_char(str[i + 1], "<>|") != 1)
                     		i++;
 	    	}
@@ -254,12 +254,15 @@ void ft_red(t_list *commands, t_env *env, char *str)
 					dup2(oldfd, 1);
 					close(fd);
 					i++;
-					if (ft_check_red(str + i + 1) == 0)
+					if (ft_check_red(str + i + 1, "<>|") == 0)
 						while (str[i + 1] && ft_check_red_char(str[i + 1], "<>|") != 1)
                     		i++;
 	    	}
 			else if (ft_check_red_char(str[i], "|") == 1)
-				execute_pipes_command(commands, env, copy, str + i + 1);
+			{
+				i += execute_pipes_command(commands, env, copy, str + i - (ft_strlen(copy) + 1));
+				i -= (ft_strlen(copy) + 1);
+			}
 			j = 0;
 		}
 		i++;
