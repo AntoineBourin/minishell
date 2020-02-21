@@ -36,13 +36,12 @@ void	command_read(t_env *env)
 	int		bytes_readen;
 	char	*translated_input;
 
-	
 	print_curr_path(env);
 	signal (SIGINT, ft_exit);
 	while ((bytes_readen = read(0, buff, 4095)) > 0)
 	{
 		buff[bytes_readen - 1] = '\0';
-		if (bytes_readen < 4095)
+		if (bytes_readen < 4095 && bytes_readen > 0)
 		{
 			translated_input = env_translator(buff, env);
 			command_middleware(env, translated_input);

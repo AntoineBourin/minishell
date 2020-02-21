@@ -32,6 +32,7 @@ typedef struct				s_env_variable
 typedef struct			s_environment
 {
 	int					check;
+	int					ope_type;
 	char				**command;
 	char				*curr_path;
 	char				*prog_name;
@@ -39,7 +40,7 @@ typedef struct			s_environment
 	int					last_program_return;
 	t_env_variable		*env_variables;
 }						t_env;
-int				ft_check_red(char *str);
+int				ft_check_red(char *str, char *sep);
 int 			ft_check_red_char(char c, char *str);
 void			command_read(t_env *env);
 void    		move_init(t_env *env);
@@ -68,7 +69,7 @@ char			**get_function_args(char *commannd);
 void			replace_env_name_by_value(char **res, t_env_variable *env,
 									int begin_index, int end_index);
 char			**ft_split_modif(char const *s, char c);
-void			execute_pipes_command(t_list *commands, t_env *env,
+int				execute_pipes_command(t_list *commands, t_env *env,
 							char *command, char *piped);
 char			*red_cut(t_list *commands, t_env *env, char *str);
 char			*remove_quote_arg(char *str);
