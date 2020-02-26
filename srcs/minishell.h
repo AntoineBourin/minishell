@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:54:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/12 14:21:49 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/26 11:46:11 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ typedef struct				s_env_variable
 typedef struct			s_environment
 {
 	int					check;
+	char				**full_paths;
+	int					error;
+	char				**ac;
 	int					ope_type;
 	char				**command;
 	char				*curr_path;
@@ -40,6 +43,29 @@ typedef struct			s_environment
 	int					last_program_return;
 	t_env_variable		*env_variables;
 }						t_env;
+
+typedef struct	s_comp
+{
+	size_t compt;
+	int start;
+	int end;
+	int exp_1;
+	int exp_2;
+}				t_comp;
+
+typedef struct	s_quote
+{
+	int i;
+	int j;
+	int check34;
+	int check39;
+	char *copy;
+}				t_quote;
+
+char 			*get_function_args2(int *i, char *command, int *arg_i);
+char    		*red_name(char *str);
+void			ft_red(t_list *commands, t_env *env, char *str);
+char			*execute_env_binary_fie2(t_env *env, char **t, char *path, int i);
 int				ft_check_red(char *str, char *sep);
 int 			ft_check_red_char(char c, char *str);
 void			command_read(t_env *env);

@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 15:21:08 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/10 16:43:54 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/26 11:31:00 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		get_nb_function_args(char *command)
 		{
 			arg_count++;
 			while (command[i] && command[i] != ' ')
-                i++;
+				i++;
 		}
 	}
 	return (arg_count);
@@ -50,9 +50,9 @@ char	*fill_arg_value(char *arg_begin, int is_quoted)
 	while (arg_begin[len])
 	{
 		if (arg_begin[len] == '"' && is_quoted)
-			break;
+			break ;
 		else if (arg_begin[len] == ' ' && !is_quoted)
-			break;
+			break ;
 		len++;
 	}
 	if (!(arg = malloc(sizeof(char) * len + 1)))
@@ -65,6 +65,20 @@ char	*fill_arg_value(char *arg_begin, int is_quoted)
 	}
 	arg[i] = '\0';
 	return (arg);
+}
+
+char	*get_function_args2(int *i, char *command, int *arg_i)
+{
+	int j;
+
+	j = *i;
+	(*arg_i)++;
+	(*i)++;
+	while (command[(*i)] && command[(*i)] != '"')
+		(*i)++;
+	while (command[(*i)] && command[(*i)] == '"')
+		(*i)++;
+	return (fill_arg_value(command + j + 1, 1));
 }
 
 char	**get_function_args(char *command)
@@ -81,23 +95,15 @@ char	**get_function_args(char *command)
 	while (command[i])
 	{
 		if (command[i] == ' ')
-            i++;
-		else if (command[i] == '"')
-		{
-			ac[arg_i] = fill_arg_value(command + i + 1, 1);
-			arg_i++;
 			i++;
-			while (command[i] && command[i] != '"')
-                i++;
-			while (command[i] && command[i] == '"')
-				i++;
-		}
+		else if (command[i] == '"')
+			ac[arg_i] = get_function_args2(&i, command, &arg_i);
 		else
 		{
 			ac[arg_i] = fill_arg_value(command + i, 0);
 			arg_i++;
 			while (command[i] && command[i] != ' ')
-                i++;
+				i++;
 		}
 	}
 	ac[arg_i] = NULL;
@@ -111,20 +117,14 @@ char	*get_arg_quotes(char *arg, char charset)
 
 	i = 0;
 	if (arg[0] && arg[0] == '"')
-	{
 		is_quoted = 1;
+	if (arg[0] && arg[0] == '"')
 		i++;
-	}
 	else
 		is_quoted = 0;
 	while (arg[i])
 	{
-		if (arg[i] == charset)
-		{
-			arg[i] = '\0';
-			return (arg);
-		}
-		if (arg[i] == ' ' && !is_quoted)
+		if ((arg[i] == charset) || (arg[i] == ' ' && !is_quoted))
 		{
 			arg[i] = '\0';
 			return (arg);

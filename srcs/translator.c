@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 12:35:56 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/12 11:36:19 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/26 10:50:01 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*env_translator(char *user_input, t_env *env)
 	i = 0;
 	while (res && res[i])
 	{
-		if (res[i] == '$')
+		if (res[i] == '$' && res[i + 1] != '\0')
 		{
 			if (res[i + 1] && res[i + 1] == '?')
 				transform_input_by_last_program_result(&res, i + 1, env);

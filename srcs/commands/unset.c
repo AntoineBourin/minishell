@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 12:10:39 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/06 12:31:29 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/26 10:44:18 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		unset(t_env *env, char *cmd, char *args)
 	char	*env_group;
 	char	*env_name;
 
+	(void)cmd;
 	env_group = args + 6;
 	env_name = get_arg_quotes(env_group, 0);
 	if (get_env_variable_if_exist(env->env_variables, env_name) == NULL)
