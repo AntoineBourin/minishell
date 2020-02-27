@@ -42,6 +42,7 @@ typedef struct			s_environment
 	char				**data_env;
 	int					last_program_return;
 	t_env_variable		*env_variables;
+	
 }						t_env;
 
 typedef struct	s_comp
