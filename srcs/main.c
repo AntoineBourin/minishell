@@ -38,8 +38,8 @@ int		main(int av, char **ac, char **env)
 {
 	t_env			shell_env;
 	t_env_variable	env_variables;
-	(void)av;
 
+	(void)av;
 	shell_env.data_env = env;
 	shell_env.last_program_return = 0;
 	init_env_variables(&env_variables, &shell_env, env);

@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:33:13 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/10 17:42:30 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/26 10:45:01 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,34 @@ int		get_env_list_size(t_env_variable *variables)
 	return (nb);
 }
 
+char	*execute_env_binary_file2(t_env *env, char **t, char *path, int i)
+{
+	int error;
+
+	error = execve(env->full_paths[i], env->ac, t);
+	error == -1 ? printf_error("Minishell", errno, path, NULL) : 0;
+	return (NULL);
+}
+
 char	*execute_env_binary_file(char *binary, char *path, t_env *env)
 {
-	char			**full_paths;
 	int				i;
-	char			**ac;
 	char			**t;
 	pid_t			pid;
-	int				error;
 
-	ac = get_function_args(path);
+	env->ac = get_function_args(path);
 	t = malloc(sizeof(char *) * 2);
 	t[0] = ft_strdup("TERM=xterm");
 	t[1] = NULL;
 	i = 0;
-	full_paths = get_env_full_path(binary, env);
-	while (full_paths[i])
+	env->full_paths = get_env_full_path(binary, env);
+	while (env->full_paths[i])
 	{
-		if (is_command_path_to_file(full_paths[i]) == 0)
+		if (is_command_path_to_file(env->full_paths[i]) == 0)
 		{
 			pid = fork();
 			if (pid == 0)
-			{
-				error = execve(full_paths[i], ac, t);
-				error == -1 ? printf_error("Minishell", errno, path, NULL) : 0;
-				return (NULL);
-			}
+				return (execute_env_binary_file2(env, t, path, i));
 			else
 				waitpid(pid, &(env->last_program_return), 0);
 			return (NULL);

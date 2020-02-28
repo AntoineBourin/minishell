@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 11:15:41 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/05 11:25:01 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/26 11:38:23 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*pwd(t_env *env, char *args)
 	{
 		if (args[i] != ' ')
 			return ("pwd: too many arguments");
-			i++;
+		i++;
 	}
 	return (env->curr_path);
 }

@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 11:55:22 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/12 15:05:03 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/26 11:01:47 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	display_commands_result(t_list *commands)
 {
-	// Redirections will be applied to commands here
 	while (commands)
 	{
 		if (commands->result)

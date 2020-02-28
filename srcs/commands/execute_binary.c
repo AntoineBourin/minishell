@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 12:20:08 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/10 17:44:31 by abourin          ###   ########.fr       */
+/*   Updated: 2020/02/26 11:36:13 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		is_command_path_to_file(char *path)
 {
 	struct stat		sb;
 	int				res;
-	
+
 	res = stat(path, &sb);
 	return (S_ISDIR(sb.st_mode) ? 2 : res);
 }
