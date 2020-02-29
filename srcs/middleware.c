@@ -6,13 +6,35 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:12:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/26 10:46:20 by nveron           ###   ########.fr       */
+/*   Updated: 2020/02/29 11:32:13 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
+static void		ft_army_if_norm1(t_env *env, char *cop,
+		char *str, t_list *command)
+{
+	if (ft_strncmp(cop, "echo", 5) == 0)
+		command->result = echo_main(env, str);
+	else if (ft_strncmp(cop, "exit", 5) == 0)
+		command->result = str;
+	else if (is_command_path_to_file(cop) != -1)
+	{
+		if (is_command_path_to_file(cop) == 2)
+			printf_error(env->prog_name, 0, "is a directory", cop);
+		else
+			command->result = execute_binary_file(cop, remove_quote_arg(str),
+					env);
+	}
+	else if (command_path_to_file_with_env(cop, env) == 0)
+		command->result = execute_env_binary_file(cop, remove_quote_arg(str),
+				env);
+	else
+		printf_error(env->prog_name, 0, str, "Command not found");
+}
+
+static void		ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 {
 	if (cop[0] == 34 || cop[0] == 39)
 	{
@@ -35,71 +57,64 @@ static void	ft_army_if(t_env *env, char *cop, char *str, t_list *command)
 		unset(env, cop, str);
 	else if (ft_strncmp(cop, "pwd", 4) == 0)
 		command->result = pwd(env, str);
-	else if (ft_strncmp(cop, "echo", 5) == 0)
-		command->result = echo_main(env, str);
-	else if (ft_strncmp(cop, "exit", 5) == 0)
-		command->result = str;
-	else if (is_command_path_to_file(cop) != -1)
-	{
-		if (is_command_path_to_file(cop) == 2)
-			printf_error(env->prog_name, 0, "is a directory", cop);
-		else
-			command->result = execute_binary_file(cop, remove_quote_arg(str), env);
-	}
-	else if (command_path_to_file_with_env(cop, env) == 0)
-		command->result = execute_env_binary_file(cop, remove_quote_arg(str), env);
 	else
-		printf_error(env->prog_name, 0, str, "Command not found");
+		ft_army_if_norm1(env, cop, str, command);
 }
 
-static void	ft_sort(t_env *env, t_list *command)
+void			ft_sort_norm1(t_comp *c1, char *str, int *tmp)
 {
-	char 	*cop;
-	int 	i;
-	int 	j;
-	int 	tmp;
-	char	*str;
-	int exp_1;
-	int exp_2;
+	while (str[c1->i] == ' ')
+		(c1->i)++;
+	(*tmp) = c1->i;
+	if (str[c1->i] == 34)
+		c1->exp_1 *= -1;
+	if (str[c1->i] == 39)
+		c1->exp_2 *= -1;
+}
 
-	j = 0;
-	i = 0;
-	exp_1 = -1;
-	exp_2 = -1;
+void			ft_sort_norm2(t_comp *c1, char **str, char **cop)
+{
+	if ((*str)[c1->i + 1] == 34 || (*str)[c1->i + 1] == 39)
+	{
+		if ((*str)[c1->i + 1] == 34)
+			c1->exp_1 *= -1;
+		if ((*str)[c1->i + 1] == 39)
+			c1->exp_2 *= -1;
+		(*cop)[c1->j + 1] = ' ';
+		(*str)[c1->i + 1] = ' ';
+	}
+	(*cop)[c1->j] = (*str)[c1->i];
+	(c1->i)++;
+	(c1->j)++;
+}
+
+static void		ft_sort(t_env *env, t_list *command)
+{
+	int		tmp;
+	char	*cop;
+	char	*str;
+	t_comp	c1;
+
+	c1.j = 0;
+	c1.i = 0;
+	c1.exp_1 = -1;
+	c1.exp_2 = -1;
 	str = command->content;
 	if (!(cop = malloc(sizeof(char) * (ft_strlen(str) + 3))))
 		return ;
-	while (str[i] == ' ')
-		i++;
-	tmp = i;
-	if (str[i] == 34)
-			exp_1 *= -1;
-	if (str[i] == 39)
-			exp_2 *= -1;
-	while (str[i] && ((exp_1 > 0 || exp_2 > 0) || ( str[i] != ' ' && str[i] != '\n')))
-	{
-		if (str[i + 1] == 34 || str[i + 1] == 39)
-		{
-			if (str[i + 1] == 34)
-				exp_1 *= -1;
-			if (str[i + 1] == 39)
-				exp_2 *= -1;
-			cop[j + 1] = ' ';
-			str[i + 1] = ' ';
-		}
-		cop[j] = str[i];
-		i++;
-		j++;
-	}
-	cop[j] = '\0';
-	if (exp_1 > 0 || exp_2 > 0)
-			cop = ft_strjoin(ft_strjoin(" ", "'"), cop);
+	ft_sort_norm1(&c1, str, &tmp);
+	while (str[c1.i] && ((c1.exp_1 > 0 || c1.exp_2 > 0) ||
+				(str[c1.i] != ' ' && str[c1.i] != '\n')))
+		ft_sort_norm2(&c1, &str, &cop);
+	cop[c1.j] = '\0';
+	if (c1.exp_1 > 0 || c1.exp_2 > 0)
+		cop = ft_strjoin(ft_strjoin(" ", "'"), cop);
 	ft_army_if(env, cop, str + tmp, command);
 	free(cop);
 	cop = NULL;
 }
 
-int 	ft_check_red_char(char c, char *str)
+int				ft_check_red_char(char c, char *str)
 {
 	int i;
 
@@ -113,7 +128,7 @@ int 	ft_check_red_char(char c, char *str)
 	return (0);
 }
 
-static void	execute_commands(t_list *commands, t_env *env)
+static void		execute_commands(t_list *commands, t_env *env)
 {
 	t_list	*tmp;
 
@@ -135,22 +150,22 @@ static void	execute_commands(t_list *commands, t_env *env)
 	display_commands_result(commands);
 }
 
-int 	ft_check_red(char *str, char *sep)
+int				ft_check_red(char *str, char *sep)
 {
-	int i;
-	int j;
-	int     exp_1;
-    int     exp_2;
+	int	i;
+	int	j;
+	int	exp_1;
+	int	exp_2;
 
-    exp_1 = -1;
-    exp_2 = -1;
+	exp_1 = -1;
+	exp_2 = -1;
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == 39)
-        	exp_1 *= -1;
-        if (str[i] == 34)
-        	exp_2 *= -1;
+			exp_1 *= -1;
+		if (str[i] == 34)
+			exp_2 *= -1;
 		j = 0;
 		while (sep[j])
 		{
@@ -163,7 +178,7 @@ int 	ft_check_red(char *str, char *sep)
 	return (0);
 }
 
-void	command_middleware(t_env *env, char *input)
+void			command_middleware(t_env *env, char *input)
 {
 	t_list		*comm_list;
 	t_list		*curr;
@@ -185,6 +200,6 @@ void	command_middleware(t_env *env, char *input)
 		curr->result = NULL;
 		ft_lstadd_back(&comm_list, curr);
 		i++;
-	} 	
+	}
 	execute_commands(comm_list, env);
 }
