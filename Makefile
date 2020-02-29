@@ -6,7 +6,7 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/02/27 08:10:45 by nveron           ###   ########.fr        #
+#    Updated: 2020/02/29 16:48:37 by abourin          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -24,8 +24,16 @@ SRC_NAME += commands/echo.c
 SRC_NAME += commands/unset.c
 SRC_NAME += translator.c
 SRC_NAME += redirection.c
+SRC_NAME += redirection_two.c
+SRC_NAME += redirection_three.c
+SRC_NAME += redirection_four.c
 SRC_NAME += split_modif.c
+SRC_NAME += norm_one.c
+SRC_NAME += norm_two.c
+SRC_NAME += norm_three.c
 SRC_NAME += commands/pipes.c
+SRC_NAME += commands/pipes_two.c
+SRC_NAME += commands/pipes_three.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
