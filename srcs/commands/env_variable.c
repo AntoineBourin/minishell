@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 14:40:31 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/26 10:44:45 by nveron           ###   ########.fr       */
+/*   Updated: 2020/02/29 15:53:41 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,24 @@ char			*display_env_list(t_env *env)
 	return (result);
 }
 
+int				contain_spaces(char *env_name)
+{
+	int		i;
+	int		spaced;
+
+	i = 0;
+	spaced = 0;
+	while (env_name[i] && env_name[i] != '=')
+	{
+		if (env_name[i] == ' ')
+			spaced = 1;
+		i++;
+	}
+	if (spaced == 1)
+		env_name[i] = '\0';
+	return (spaced);
+}
+
 char			*export_env(t_env *env, char *cmd, char *args)
 {
 	char	*env_group;
@@ -92,12 +110,19 @@ char			*export_env(t_env *env, char *cmd, char *args)
 	(void)cmd;
 	i = 0;
 	env_group = args + 6;
+	if (env_group[0] == ' ')
+		env_group = args + 7;
 	if (env_group[0] == '\0')
 		return (display_env_list(env));
 	while (env_group[i] && env_group[i] != '=')
 		i++;
 	if ((env_group + i)[0] == '\0')
 		return (display_env_list(env));
+	if (contain_spaces(env_group) == 1)
+	{
+		printf_error("export", 0, env_group, "not valid in this context");
+		return (NULL);
+	}
 	env_name = get_arg_quotes(env_group, '=');
 	env_value = get_arg_quotes(env_group + i + 1, 0);
 	push_env_variable_list(env->env_variables, env_name, env_value);

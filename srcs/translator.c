@@ -6,23 +6,11 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 12:35:56 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/29 11:49:48 by nveron           ###   ########.fr       */
+/*   Updated: 2020/02/29 16:35:12 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	replace_env_norm1(char ***res, t_comp *c1, int begin_index, char **tmp)
-{
-	c1->i = 0;
-	c1->j = 0;
-	while ((**res)[c1->i] && (int)c1->i < begin_index - 1)
-	{
-		(*tmp)[c1->i] = (**res)[c1->i];
-		(c1->i)++;
-	}
-	c1->k = c1->i;
-}
 
 void	replace_env_norm2(int *length, t_env_variable *env)
 {

@@ -6,7 +6,7 @@
 /*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 10:27:50 by nveron            #+#    #+#             */
-/*   Updated: 2020/02/29 11:12:00 by nveron           ###   ########.fr       */
+/*   Updated: 2020/02/29 16:15:16 by abourin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,6 @@ static size_t	ft_size(size_t i, char const *s, char c)
 		i++;
 	}
 	return (size);
-}
-
-static int		ft_while(int i, int c, char const *s)
-{
-	while (s[i] == c)
-		i++;
-	return (i);
-}
-
-static char		**ft_crash(char **str, int j)
-{
-	while (j > 0)
-	{
-		free(str[j]);
-		j--;
-	}
-	free(str);
-	return (NULL);
 }
 
 int				ft_split_modif_norm1(t_comp *c1, const char *s, int i, char c)
