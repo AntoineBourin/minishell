@@ -87,7 +87,8 @@ char	*execute_env_binary_file(char *binary, char *path, t_env *env)
 	pid_t			pid;
 
 	env->ac = get_function_args(path);
-	t = malloc(sizeof(char *) * 2);
+	if (!(t = malloc(sizeof(char *) * 2)))
+		return (NULL);
 	t[0] = ft_strdup("TERM=xterm");
 	t[1] = NULL;
 	i = 0;
@@ -101,9 +102,11 @@ char	*execute_env_binary_file(char *binary, char *path, t_env *env)
 				return (execute_env_binary_file2(env, t, path, i));
 			else
 				waitpid(pid, &(env->last_program_return), 0);
+			ft_free(t);
 			return (NULL);
 		}
 		i++;
 	}
+	ft_free(t);
 	return (NULL);
 }

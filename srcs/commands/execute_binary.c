@@ -33,6 +33,7 @@ char	*execute_binary_file(char *path, char *args, t_env *env)
 	{
 		error = execve(path, ac, env->data_env);
 		error == -1 ? printf_error("Minishell", errno, path, NULL) : 0;
+		ft_free(ac);
 		return (NULL);
 	}
 	else

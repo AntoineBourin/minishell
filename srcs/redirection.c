@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+void	ft_red_norm5(char **copy, t_comp *c1, char *str)
+{
+	(*copy)[c1->j] = str[c1->i];
+	(c1->j)++;
+}
+
 void	ft_red_norm6(t_comp *c1, t_list *commands, t_env *env, char *str)
 {
 	c1->i += execute_pipes_command(commands, env, c1->cop,

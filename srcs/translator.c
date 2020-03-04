@@ -12,14 +12,6 @@
 
 #include "minishell.h"
 
-void	replace_env_norm2(int *length, t_env_variable *env)
-{
-	if (env == NULL)
-		(*length) = 0;
-	else
-		(*length) = ft_strlen(env->content) - ft_strlen(env->name);
-}
-
 void	replace_env_name_by_value(char **res, t_env_variable *env,
 		int begin_index, int end_index)
 {

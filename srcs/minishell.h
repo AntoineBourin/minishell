@@ -6,7 +6,7 @@
 /*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 13:54:05 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/29 16:59:41 by abourin          ###   ########.fr       */
+/*   Updated: 2020/03/04 07:53:14 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,52 @@ typedef struct				s_quote
 	char					*copy;
 }							t_quote;
 
+void						ft_free(char **str);
+int							execute_pipe_norm3(char *piped, char *copy, int *j,
+							int *i);
+void						execute_pipe_norm2(char *piped, int *i, int *j,
+							char *copy);
+void						execute_pipe_norm1(char **copy, char *command, t_env
+							*env, int *fd_red);
+int							run_pipe(t_list *commands, t_env *env, char *str,
+							int *fd);
+void						run_pipe2(t_env *env, int *fd);
+void						execute_pipe_norm8(int *fd_red, char *piped, int i);
+void						execute_pipe_norm9(t_env *env, int *fd_red,
+							char *piped, char *copy);
+void						ft_strcpy_s(const char *src, const char *src2,
+							char *dest);
+void						execute_pipe_norm7(int fd_red, t_env *env,
+							char *piped, int i);
+int							execute_pipe_norm6(int fd_red, char **copy);
+void						execute_pipe_norm5(t_env *env, int *fd_red, int *i,
+							char *piped);
+int							execute_pipe_norm4(t_env *env, char **copy, int *fd,
+							t_list *commands);
+int							ft_split_modif_norm1(t_comp *c1, const char *s,
+							int i, char c);
+void						ft_sort(t_env *env, t_list *command);
+void						ft_split_modif_norm2(t_comp *c1, char ***new,
+							size_t *j, size_t *i);
+void						replace_env_norm1(char ***res, t_comp *c1,
+							int begin_index, char **tmp);
+void						replace_env_norm2(int *length, t_env_variable *env);
+char						*ft_army_if_red_norm1(t_env *env, char *cop,
+							char *str, t_list *command);
+char						*check_exeption_chiante(char *ref, char *str,
+							char *name);
+int							check_before(char *str, int i, char c);
+char						*sort_with_red(t_list *commands, t_env *env,
+							char *first, char *second);
+char						*red_name(char *str);
+void						ft_red_norm1(char *str, t_comp *c1,
+							t_list *commands, t_env *env);
+void						ft_red_norm2(char *str, t_comp *c1,
+							t_list *commands, t_env *env);
+void						ft_red_norm3(t_comp *c1,
+							t_list *commands, t_env *env, char *str);
+int							ft_red_norm4(t_comp *c1, char *str,
+							char **copy, t_env *env);
 char						*get_function_args2(int *i, char *command,
 							int *arg_i);
 char						*red_name(char *str);

@@ -12,32 +12,6 @@
 
 #include "minishell.h"
 
-static void		ft_sort(t_env *env, t_list *command)
-{
-	int		tmp;
-	char	*cop;
-	char	*str;
-	t_comp	c1;
-
-	c1.j = 0;
-	c1.i = 0;
-	c1.exp_1 = -1;
-	c1.exp_2 = -1;
-	str = command->content;
-	if (!(cop = malloc(sizeof(char) * (ft_strlen(str) + 3))))
-		return ;
-	ft_sort_norm1(&c1, str, &tmp);
-	while (str[c1.i] && ((c1.exp_1 > 0 || c1.exp_2 > 0) ||
-				(str[c1.i] != ' ' && str[c1.i] != '\n')))
-		ft_sort_norm2(&c1, &str, &cop);
-	cop[c1.j] = '\0';
-	if (c1.exp_1 > 0 || c1.exp_2 > 0)
-		cop = ft_strjoin(ft_strjoin(" ", "'"), cop);
-	ft_army_if(env, cop, str + tmp, command);
-	free(cop);
-	cop = NULL;
-}
-
 int				ft_check_red_char(char c, char *str)
 {
 	int i;

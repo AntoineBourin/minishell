@@ -75,4 +75,5 @@ void		cd_split(t_env *env, char *buff)
 		move(NULL, 0, env);
 	else
 		move(str, 0, env);
+	ft_free(&str);
 }

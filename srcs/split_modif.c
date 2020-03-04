@@ -66,25 +66,22 @@ static size_t	ft_size(size_t i, char const *s, char c)
 	return (size);
 }
 
-int				ft_split_modif_norm1(t_comp *c1, const char *s, int i, char c)
+static int		ft_while(int i, int c, char const *s)
 {
-	if (s[i] == 39)
-		c1->exp_1 *= -1;
-	if (s[i] == 34)
-		c1->exp_2 *= -1;
-	if (s[i] == c && c1->exp_1 < 0 && c1->exp_2 < 0)
-		return (1);
-	return (0);
+	while (s[i] == c)
+		i++;
+	return (i);
 }
 
-void			ft_split_modif_norm2(t_comp *c1,
-		char ***new, size_t *j, size_t *i)
+static char		**ft_crash(char **str, int j)
 {
-	c1->exp_1 = -1;
-	c1->exp_2 = -1;
-	(*new) = NULL;
-	(*j) = 0;
-	(*i) = 0;
+	while (j > 0)
+	{
+		free(str[j]);
+		j--;
+	}
+	free(str);
+	return (NULL);
 }
 
 char			**ft_split_modif(char const *s, char c)
