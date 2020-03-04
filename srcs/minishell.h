@@ -71,9 +71,9 @@ typedef struct				s_quote
 	char					*copy;
 }							t_quote;
 
-void						ft_free(char **str);
 int							execute_pipe_norm3(char *piped, char *copy, int *j,
 							int *i);
+void						ft_free(char **str);
 void						execute_pipe_norm2(char *piped, int *i, int *j,
 							char *copy);
 void						execute_pipe_norm1(char **copy, char *command, t_env
