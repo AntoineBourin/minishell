@@ -13,7 +13,9 @@
 SRC_NAME += main.c
 SRC_NAME += command_read.c
 SRC_NAME += commands/move_into_folders.c
+SRC_NAME += commands/move_into_folders_2.c
 SRC_NAME += middleware.c
+SRC_NAME += middleware_2.c
 SRC_NAME += commands/pwd.c
 SRC_NAME += commands_result.c
 SRC_NAME += commands/execute_binary.c
@@ -23,9 +25,17 @@ SRC_NAME += args_helper.c
 SRC_NAME += commands/echo.c
 SRC_NAME += commands/unset.c
 SRC_NAME += translator.c
+SRC_NAME += translator_2.c
 SRC_NAME += redirection.c
+SRC_NAME += redirection_2.c
+SRC_NAME += redirection_3.c
+SRC_NAME += redirection_4.c
 SRC_NAME += split_modif.c
+SRC_NAME += split_modif_2.c
 SRC_NAME += commands/pipes.c
+SRC_NAME += commands/pipes_2.c
+SRC_NAME += commands/pipes_3.c
+SRC_NAME += commands/free.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

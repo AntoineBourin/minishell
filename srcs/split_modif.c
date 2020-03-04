@@ -84,27 +84,6 @@ static char		**ft_crash(char **str, int j)
 	return (NULL);
 }
 
-int				ft_split_modif_norm1(t_comp *c1, const char *s, int i, char c)
-{
-	if (s[i] == 39)
-		c1->exp_1 *= -1;
-	if (s[i] == 34)
-		c1->exp_2 *= -1;
-	if (s[i] == c && c1->exp_1 < 0 && c1->exp_2 < 0)
-		return (1);
-	return (0);
-}
-
-void			ft_split_modif_norm2(t_comp *c1,
-		char ***new, size_t *j, size_t *i)
-{
-	c1->exp_1 = -1;
-	c1->exp_2 = -1;
-	(*new) = NULL;
-	(*j) = 0;
-	(*i) = 0;
-}
-
 char			**ft_split_modif(char const *s, char c)
 {
 	char	**new;
