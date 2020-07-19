@@ -72,11 +72,17 @@ void	ft_red_norm2(char *str, t_comp *c1, t_list *commands, t_env *env)
 
 void	ft_red_norm3(t_comp *c1, t_list *commands, t_env *env, char *str)
 {
+	char *string;
+
 	if (c1->res != NULL)
 		c1->res = ft_strjoin(c1->res, sort_with_red(commands,
 		env, c1->cop, str + c1->i + 1));
 	else
-		c1->res = sort_with_red(commands, env, c1->cop, str + c1->i + 1);
+	{
+		string = sort_with_red(commands, env, c1->cop, str + c1->i + 1);
+		c1->res = str;
+		free(str);
+	}
 	while (str[c1->i] && str[c1->i + 1] && ft_check_red(str + c1->i + 1,
 	"<>|") != 0 && ft_check_red_char(str[c1->i + 1], "<>|") != 1)
 		(c1->i)++;

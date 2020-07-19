@@ -108,7 +108,7 @@ void			ft_sort(t_env *env, t_list *command)
 		ft_sort_norm2(&c1, &str, &cop);
 	cop[c1.j] = '\0';
 	if (c1.exp_1 > 0 || c1.exp_2 > 0)
-		cop = ft_strjoin(ft_strjoin(" ", "'"), cop);
+		cop = ft_strjoin(" '", cop);
 	ft_army_if(env, cop, str + tmp, command);
 	free(cop);
 	cop = NULL;

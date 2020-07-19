@@ -6,7 +6,7 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/02/29 16:48:37 by abourin          ###   ########.fr        #
+#    Updated: 2020/02/27 08:10:45 by nveron           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -20,6 +20,7 @@ SRC_NAME += commands/pwd.c
 SRC_NAME += commands_result.c
 SRC_NAME += commands/execute_binary.c
 SRC_NAME += commands/exec_binary_with_env.c
+SRC_NAME += commands/exec_binary_with_env_2.c
 SRC_NAME += commands/env_variable.c
 SRC_NAME += args_helper.c
 SRC_NAME += commands/echo.c
@@ -48,7 +49,7 @@ RM = rm -f
 
 NAME = minishell
 
-CC = GCC
+CC = clang
 
 CFLAGS = -Wall -Wextra -fsanitize=address -g3 -Isrcs -Isrcs/libft
 

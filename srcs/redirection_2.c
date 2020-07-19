@@ -110,7 +110,7 @@ char	*red_cut(t_list *commands, t_env *env, char *str)
 		red_cut_norm1(&c1, &str, &cop);
 	cop[c1.j] = '\0';
 	if (c1.exp_1 > 0 || c1.exp_2 > 0)
-		cop = ft_strjoin(ft_strjoin(" ", "'"), cop);
+		cop = ft_strjoin(" '", cop);
 	result = ft_army_if_red(env, cop, str + tmp, commands);
 	free(cop);
 	cop = NULL;

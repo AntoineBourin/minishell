@@ -87,10 +87,8 @@ char	*execute_env_binary_file(char *binary, char *path, t_env *env)
 	pid_t			pid;
 
 	env->ac = get_function_args(path);
-	if (!(t = malloc(sizeof(char *) * 2)))
+	if (exec_binary_norm(&t))
 		return (NULL);
-	t[0] = ft_strdup("TERM=xterm");
-	t[1] = NULL;
 	i = 0;
 	env->full_paths = get_env_full_path(binary, env);
 	while (env->full_paths[i])
