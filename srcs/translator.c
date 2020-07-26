@@ -50,7 +50,8 @@ void	transform_res_env_input(char **res, int index, t_env *env)
 
 	begin_index = index;
 	input = *res;
-	while (input[index])
+	while (input[index] && ((input[index] >= 'a' && input[index] <= 'z')
+	|| (input[index] >= 'A' && input[index] <= 'Z')))
 		index++;
 	end_index = index;
 	if (!(env_name = malloc(sizeof(char) * (end_index - begin_index + 1))))
