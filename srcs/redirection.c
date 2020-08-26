@@ -20,8 +20,7 @@ void	ft_red_norm5(char **copy, t_comp *c1, char *str)
 
 void	ft_red_norm6(t_comp *c1, t_list *commands, t_env *env, char *str)
 {
-	c1->i += execute_pipes_command(commands, env, c1->cop,
-	str + c1->i - (ft_strlen(c1->cop) + 1));
+	c1->i += execute_pipes_command(commands, env, c1->cop, str);
 	c1->i -= (ft_strlen(c1->cop) + 1);
 }
 

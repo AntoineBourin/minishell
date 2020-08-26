@@ -14,15 +14,15 @@
 
 void	printf_error(char *name, int error, char *str, char *errorstr)
 {
-	ft_putstr_fd(name, 0);
-	ft_putstr_fd(": ", 0);
+	ft_putstr_fd(name, 1);
+	ft_putstr_fd(": ", 1);
 	if (error != 0)
-		ft_putstr_fd(strerror(error), 0);
+		ft_putstr_fd(strerror(error), 1);
 	else
-		ft_putstr_fd(errorstr, 0);
-	ft_putstr_fd(": ", 0);
-	ft_putstr_fd(str, 0);
-	ft_putchar_fd('\n', 0);
+		ft_putstr_fd(errorstr, 1);
+	ft_putstr_fd(": ", 1);
+	ft_putstr_fd(str, 1);
+	ft_putchar_fd('\n', 1);
 }
 
 void	replace_tild_by_home(char **str, t_env *env)

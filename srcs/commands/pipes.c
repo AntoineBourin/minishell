@@ -52,7 +52,7 @@ int		execute_pipes_command(t_list *commands, t_env *env,
 		return (1);
 	execute_pipe_norm1(&copy, command, env, &fd_red);
 	env->i = 0;
-	while (piped[env->i])
+	while (piped && piped[env->i])
 	{
 		env->j = 0;
 		if (copy[0] == '\0')

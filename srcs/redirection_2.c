@@ -17,9 +17,9 @@ char	*ft_army_if_red_norm1(t_env *env, char *cop, char *str,
 {
 	(void)command;
 	if (ft_strncmp(cop, "pwd", 3) == 0)
-		return (pwd(env, str));
+		ft_putstr_fd(pwd(env, str), 1);
 	else if (ft_strncmp(cop, "echo", 4) == 0)
-		return (echo_main(env, str));
+		ft_putstr_fd(echo_main(env, str), 1);
 	else if (ft_strncmp(cop, "exit", 4) == 0)
 		return ("exit");
 	else if (is_command_path_to_file(cop) != -1)
@@ -56,7 +56,7 @@ char	*ft_army_if_red(t_env *env, char *cop, char *str, t_list *command)
 		return (NULL);
 	}
 	else if (ft_strncmp(cop, "env", 3) == 0)
-		return (display_env_list(env));
+		ft_putstr_fd(display_env_list(env), 1);
 	else if (ft_strncmp(cop, "unset", 5) == 0)
 		unset(env, cop, str);
 	else
