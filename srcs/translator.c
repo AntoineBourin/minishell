@@ -73,19 +73,29 @@ void	transform_input_by_last_program_result(char **res,
 	replace_env_name_by_value(res, &question_mark, index, index + 1);
 }
 
+int		check_quote(char c, int i)
+{
+	if (c == 39)
+		return (i * -1);
+	return (i);
+}
+
 char	*env_translator(char *user_input, t_env *env)
 {
 	int		i;
+	int		quote;
 	char	*res;
 
+	quote = -1;
+	i = 0;
 	if (!(res = malloc(sizeof(char) * ft_strlen(user_input) + 1)))
 		return (NULL);
 	ft_memcpy(res, user_input, ft_strlen(user_input));
 	res[ft_strlen(user_input)] = '\0';
-	i = 0;
 	while (res && res[i])
 	{
-		if (res[i] == '$' && res[i + 1] != '\0')
+		quote = check_quote(res[i], quote);
+		if (res[i] == '$' && res[i + 1] != '\0' && quote < 0)
 		{
 			if (res[i + 1] && res[i + 1] == '?')
 				transform_input_by_last_program_result(&res, i + 1, env);
