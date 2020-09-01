@@ -20,6 +20,7 @@ void		remove_env_variable(t_env_variable **env_variables, char *name)
 	if (!env_variables)
 		return ;
 	tmp = *env_variables;
+	prec = NULL;
 	while (tmp)
 	{
 		if (tmp->name && ft_strncmp(tmp->name, name, 4096) == 0)
@@ -27,11 +28,9 @@ void		remove_env_variable(t_env_variable **env_variables, char *name)
 			if (prec)
 				prec->next = tmp->next;
 			else
-			{
-				env_variables = &(tmp->next);
-			}
-			free(tmp);
+				*env_variables = (tmp->next);
 			tmp = NULL;
+			return ;
 		}
 		prec = tmp;
 		if (tmp)

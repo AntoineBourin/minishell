@@ -44,7 +44,7 @@ int		command_path_to_file_with_env(char *path, t_env *env)
 
 	i = 0;
 	full_paths = get_env_full_path(path, env);
-	while (full_paths[i])
+	while (full_paths && full_paths[i])
 	{
 		if (is_command_path_to_file(full_paths[i]) == 0)
 		{
