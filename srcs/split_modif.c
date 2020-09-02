@@ -35,6 +35,7 @@ static size_t	ft_compt(char const *s, char ch)
 		}
 		else
 			(c.end)++;
+		c.end = s[c.end - 1] == 92 && c.end > 0 && s[c.end] ? c.end + 1 : c.end;
 	}
 	if (c.start - c.end < 0)
 		(c.compt)++;
@@ -43,27 +44,31 @@ static size_t	ft_compt(char const *s, char ch)
 
 static size_t	ft_size(size_t i, char const *s, char c)
 {
-	size_t	size;
-	int		exp_1;
-	int		exp_2;
+	t_comp	all;
 
-	size = 0;
-	exp_1 = -1;
-	exp_2 = -1;
+	all.size = 0;
+	all.exp_1 = -1;
+	all.exp_2 = -1;
 	while (s[i] == c)
 		i++;
 	while (s[i])
 	{
-		if (s[i] == 39)
-			exp_1 *= -1;
-		if (s[i] == 34)
-			exp_2 *= -1;
-		if (s[i] == c && exp_1 < 0 && exp_2 < 0)
-			break ;
-		size++;
-		i++;
+		if (s[i] == 92)
+		{
+			if (ft_norm_size(&i, s, &(all.size)) == 1)
+				break ;
+		}
+		else
+		{
+			all.exp_1 = s[i] == 39 ? all.exp_1 *= -1 : all.exp_1;
+			all.exp_2 = s[i] == 34 ? all.exp_2 *= -1 : all.exp_2;
+			if (s[i] == c && all.exp_1 < 0 && all.exp_2 < 0)
+				break ;
+			all.size++;
+			i++;
+		}
 	}
-	return (size);
+	return (all.size);
 }
 
 static int		ft_while(int i, int c, char const *s)
@@ -98,7 +103,7 @@ char			**ft_split_modif(char const *s, char c)
 		{
 			c1.k = 0;
 			c1.i = ft_while(c1.i, c, s);
-			if (!(new[c1.j] = malloc(sizeof(char) * ft_size(c1.i, s, c) + 1)))
+			if (!(new[c1.j] = malloc(sizeof(char) * ft_size(c1.i, s, c) + 2)))
 				return (ft_crash(new, c1.j));
 			while (s[c1.i])
 			{
