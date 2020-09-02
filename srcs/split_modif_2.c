@@ -15,6 +15,8 @@
 
 int				ft_split_modif_norm1(t_comp *c1, const char *s, int i, char c)
 {
+	if (i > 0 && s[i - 1] == 92)
+		return (0);
 	if (s[i] == 39)
 		c1->exp_1 *= -1;
 	if (s[i] == 34)
@@ -32,4 +34,15 @@ void			ft_split_modif_norm2(t_comp *c1,
 	(*new) = NULL;
 	(*j) = 0;
 	(*i) = 0;
+}
+
+int				ft_norm_size(size_t *i, char const *s, size_t *size)
+{
+	(*i)++;
+	if (s[*i])
+		(*i)++;
+	(*size) += 2;
+	if (!(s[(*i)]))
+		return (1);
+	return (0);
 }

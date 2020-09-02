@@ -48,30 +48,45 @@ static void		execute_commands(t_list *commands, t_env *env)
 	display_commands_result(commands);
 }
 
+int				ft_norm_check_red(t_comp *all, char *str)
+{
+	if (str[all->i] == 92)
+	{
+		(all->exp_3) *= -1;
+		if (str[all->i + 1] == '\0')
+			return (0);
+		(all->i)++;
+	}
+	if (str[all->i] == 39 && (all->exp_3) < 0)
+		(all->exp_1) *= -1;
+	if (str[all->i] == 34 && (all->exp_3) < 0)
+		(all->exp_2) *= -1;
+	return (1);
+}
+
 int				ft_check_red(char *str, char *sep)
 {
-	int	i;
-	int	j;
-	int	exp_1;
-	int	exp_2;
+	t_comp all;
 
-	exp_1 = -1;
-	exp_2 = -1;
-	i = 0;
-	while (str[i])
+	all.exp_1 = -1;
+	all.exp_2 = -1;
+	all.exp_3 = -1;
+	all.i = 0;
+	while (str[all.i])
 	{
-		if (str[i] == 39)
-			exp_1 *= -1;
-		if (str[i] == 34)
-			exp_2 *= -1;
-		j = 0;
-		while (sep[j])
+		if (ft_norm_check_red(&all, str) == 0)
+			return (0);
+		all.j = 0;
+		while (sep[all.j])
 		{
-			if (str[i] == sep[j] && exp_1 < 0 && exp_2 < 0)
+			if (str[all.i] == sep[all.j] &&
+			all.exp_1 < 0 && all.exp_2 < 0 && all.exp_3 < 0)
 				return (1);
-			j++;
+			all.j++;
 		}
-		i++;
+		all.i++;
+		if (all.exp_3 > 0)
+			all.exp_3 *= -1;
 	}
 	return (0);
 }

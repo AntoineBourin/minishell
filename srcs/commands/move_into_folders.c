@@ -50,6 +50,14 @@ void	remove_quote_arg2(int *check34, int *check39, int *i, char *str)
 	(*check39) = 0;
 	while (str[(*i)])
 	{
+		if (str[(*i)] == 92)
+		{
+			(*i)++;
+			if (str[(*i)])
+				(*i)++;
+			if (!(str[(*i)]))
+				break ;
+		}
 		if (str[(*i)] == 34)
 			(*check34)++;
 		if (str[(*i)] == 39)

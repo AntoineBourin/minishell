@@ -55,11 +55,13 @@ typedef struct				s_comp
 	int						end;
 	int						exp_1;
 	int						exp_2;
+	int						exp_3;
 	size_t					i;
 	size_t					j;
 	size_t					k;
 	char					*res;
 	char					*cop;
+	size_t					size;
 }							t_comp;
 
 typedef struct				s_quote
@@ -163,4 +165,6 @@ int							execute_pipes_command(t_list *commands, t_env *env,
 							char *command, char *piped);
 char						*red_cut(t_list *commands, t_env *env, char *str);
 char						*remove_quote_arg(char *str);
+int							ft_norm_size(size_t *i, char const *s,
+size_t *size);
 #endif

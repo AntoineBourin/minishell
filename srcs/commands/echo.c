@@ -53,6 +53,27 @@ int		check_arg_n(char *str)
 	return (check_arg_n2(str, i, a));
 }
 
+void	norminette_echo(char **str, int *i, int *j, char **ret)
+{
+	if ((*str)[(*i)] == 92)
+	{
+		if ((*str)[(*i + 1)])
+		{
+			(*ret)[(*j)] = (*str)[(*i + 1)];
+			(*i)++;
+			(*j)++;
+		}
+		else
+			(*ret)[(*j)] = '\0';
+	}
+	else if ((*str)[(*i)] != '"' && (*str)[(*i)] != 39)
+	{
+		(*ret)[(*j)] = (*str)[(*i)];
+		(*j)++;
+	}
+	(*i)++;
+}
+
 int		echo_main2(char **str, int *i, int *j, char **ret)
 {
 	int check;
@@ -69,12 +90,7 @@ int		echo_main2(char **str, int *i, int *j, char **ret)
 		(*i)++;
 	while ((*str)[(*i)] && (*str)[(*i)])
 	{
-		if ((*str)[(*i)] != '"' && (*str)[(*i)] != 39)
-		{
-			(*ret)[(*j)] = (*str)[(*i)];
-			(*j)++;
-		}
-		(*i)++;
+		norminette_echo(str, i, j, ret);
 	}
 	return (check);
 }
