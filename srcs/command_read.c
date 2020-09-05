@@ -32,14 +32,27 @@ void		ft_exit_2(int i)
 	write(1, "\n", 1);
 }
 
+void		ft_signal(int i)
+{
+	if (i)
+	{
+		signal(SIGINT, ft_exit);
+		signal(SIGQUIT, ft_exit);
+	}
+	else
+	{
+		signal(SIGINT, ft_exit_2);
+		signal(SIGQUIT, ft_exit_2);
+	}
+}
+
 void		command_read(t_env *env)
 {
 	char	buff[4096];
 	int		bytes_readen;
 
 	bytes_readen = -1;
-	signal(SIGINT, ft_exit);
-	signal(SIGQUIT, ft_exit);
+	ft_signal(1);
 	if (bytes_readen == -1)
 		print_curr_path(env);
 	while ((bytes_readen = read(0, buff, 4095)) > 0)
@@ -53,10 +66,10 @@ void		command_read(t_env *env)
 			buff[bytes_readen - 1] = '\0';
 		if (bytes_readen < 4095 && bytes_readen > 0)
 		{
-			signal(SIGINT, ft_exit_2);
+			ft_signal(0);
 			command_middleware(env, env_translator(buff, env));
 			print_curr_path(env);
-			signal(SIGINT, ft_exit);
+			ft_signal(1);
 		}
 	}
 }
