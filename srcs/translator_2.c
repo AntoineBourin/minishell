@@ -16,7 +16,8 @@ void	replace_env_norm1(char ***res, t_comp *c1, int begin_index, char **tmp)
 {
 	c1->i = 0;
 	c1->j = 0;
-	while ((**res)[c1->i] && (int)c1->i < begin_index - 1)
+	while (*tmp && (*tmp)[c1->i] && (**res)[c1->i] &&
+	(int)c1->i < begin_index - 1)
 	{
 		(*tmp)[c1->i] = (**res)[c1->i];
 		(c1->i)++;
