@@ -12,6 +12,29 @@
 
 #include "minishell.h"
 
+t_env	g_shell_env;
+
+void	ft_exit(int i)
+{
+	char *str;
+
+	(void)i;
+	str = NULL;
+	str = getcwd(str, 1000000);
+	g_shell_env.last_program_return = 1;
+	write(1, "\n", 1);
+	if (g_shell_env.last_program_return)
+		ft_putstr_fd("\033[1;31m", 1);
+	else
+		ft_putstr_fd("\033[1;32m", 1);
+	write(1, "[", 1);
+	ft_putstr_fd(ft_itoa(g_shell_env.last_program_return), 1);
+	write(1, "] ", 2);
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd(" : ", 1);
+	ft_putstr_fd("\033[0;m", 1);
+}
+
 void	init_env_variables(t_env_variable *env_variables, t_env *shell_env,
 					char **env)
 {
@@ -36,14 +59,13 @@ void	init_env_variables(t_env_variable *env_variables, t_env *shell_env,
 
 int		main(int av, char **ac, char **env)
 {
-	t_env			shell_env;
 	t_env_variable	env_variables;
 
 	(void)av;
-	shell_env.data_env = env;
-	shell_env.last_program_return = 0;
-	init_env_variables(&env_variables, &shell_env, env);
-	shell_env.prog_name = ac[0];
-	move_init(&shell_env);
-	command_read(&shell_env);
+	g_shell_env.data_env = env;
+	g_shell_env.last_program_return = 0;
+	init_env_variables(&env_variables, &g_shell_env, env);
+	g_shell_env.prog_name = ac[0];
+	move_init(&g_shell_env);
+	command_read(&g_shell_env);
 }

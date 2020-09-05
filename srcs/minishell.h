@@ -167,4 +167,5 @@ char						*red_cut(t_list *commands, t_env *env, char *str);
 char						*remove_quote_arg(char *str);
 int							ft_norm_size(size_t *i, char const *s,
 size_t *size);
+void						ft_exit(int i);
 #endif
