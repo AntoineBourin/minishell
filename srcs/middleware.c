@@ -106,7 +106,10 @@ void			command_middleware(t_env *env, char *input)
 	comm_list->result = NULL;
 	i = 1;
 	if (commands[0] == NULL)
+	{
+		env->last_program_return = 0;
 		return ;
+	}
 	while (commands[i])
 	{
 		curr = ft_lstnew(commands[i]);

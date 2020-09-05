@@ -69,7 +69,10 @@ void	transform_input_by_last_program_result(char **res,
 	t_env_variable	question_mark;
 
 	question_mark.name = "?";
-	question_mark.content = ft_itoa(WEXITSTATUS(env->last_program_return));
+	if (WEXITSTATUS(env->last_program_return))
+		question_mark.content = ft_itoa(WEXITSTATUS(env->last_program_return));
+	else
+		question_mark.content = ft_itoa(env->last_program_return);
 	replace_env_name_by_value(res, &question_mark, index, index + 1);
 }
 

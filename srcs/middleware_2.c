@@ -31,7 +31,10 @@ static void		ft_army_if_norm1(t_env *env, char *cop,
 		command->result = execute_env_binary_file(cop, remove_quote_arg(str),
 				env);
 	else
+	{
 		printf_error(env->prog_name, 0, str, "Command not found");
+		env->last_program_return = 127;
+	}
 }
 
 static void		ft_army_if(t_env *env, char *cop, char *str, t_list *command)
