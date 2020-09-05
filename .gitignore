@@ -5,3 +5,4 @@ srcs/commands/*.o
 srcs/libft/libft.a
 .DS_Store
 srcs/.DS_Store
+.idea
