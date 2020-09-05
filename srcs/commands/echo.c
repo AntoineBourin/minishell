@@ -116,5 +116,6 @@ char	*echo_main(t_env *env, char *str)
 	if (ret[0] == '\0' && env->check != 42)
 		return ("\n");
 	env->check = 42;
+	env->last_program_return = 0;
 	return (ret);
 }
