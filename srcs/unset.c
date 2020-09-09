@@ -45,8 +45,17 @@ void		unset(t_env *env, char *cmd, char *args)
 
 	(void)cmd;
 	env_group = args + 6;
-	env_name = get_arg_quotes(env_group, 0);
+	if (env->ac[1] != '\0')
+		env_name = get_arg_quotes(env_group, 0);
+	else
+	{
+		env_name = NULL;
+		env->last_program_return = 1;
+		ft_putstr_fd("unset: not enough arguments\n", 1);
+		return ;
+	}
 	if (get_env_variable_if_exist(env->env_variables, env_name) == NULL)
 		return ;
 	remove_env_variable(&(env->env_variables), env_name);
+	env->last_program_return = 0;
 }

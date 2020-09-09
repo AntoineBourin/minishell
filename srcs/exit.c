@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 13:06:25 by nveron            #+#    #+#             */
-/*   Updated: 2020/03/04 08:13:06 by nveron           ###   ########.fr       */
+/*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
+/*   Updated: 2020/09/04 11:01:47 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free(char **str)
+void    ft_exit(t_env *env)
 {
-	if (*str)
-		free(*str);
-	(*str) = NULL;
+    if (env->ac[1] != '\0')
+        exit(ft_atoi(env->ac[1]));
+    else
+        exit(env->last_program_return);
 }

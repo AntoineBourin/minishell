@@ -1,46 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_into_folders.c                                :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 13:06:25 by nveron            #+#    #+#             */
-/*   Updated: 2020/02/26 12:12:53 by nveron           ###   ########.fr       */
+/*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
+/*   Updated: 2020/09/04 11:01:47 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	printf_error(char *name, int error, char *str, char *errorstr)
+int				contain_spaces(char *env_name)
 {
-	ft_putstr_fd(name, 1);
-	ft_putstr_fd(": ", 1);
-	if (error != 0)
-		ft_putstr_fd(strerror(error), 1);
-	else
-		ft_putstr_fd(errorstr, 1);
-	ft_putstr_fd(": ", 1);
-	ft_putstr_fd(str, 1);
-	ft_putchar_fd('\n', 1);
-}
-
-void	replace_tild_by_home(char **str, t_env *env)
-{
-	t_env_variable	*home;
-	int				i;
+	int		i;
+	int		spaced;
 
 	i = 0;
-	if (!(home = get_env_variable_if_exist(env->env_variables, "HOME")))
-		return ;
-	home->name = "~";
-	while ((*str)[i])
+	spaced = 0;
+	while (env_name[i] && env_name[i] != '=')
 	{
-		if ((*str)[i] == '~')
-			replace_env_name_by_value(str, home, i, i);
+		if (env_name[i] == ' ')
+			spaced = 1;
 		i++;
 	}
-	home->name = "HOME";
+	if (spaced == 1)
+		env_name[i] = '\0';
+	return (spaced);
 }
 
 void	remove_quote_arg2(int *check34, int *check39, int *i, char *str)
@@ -99,31 +86,32 @@ char	*remove_quote_arg(char *str)
 	return ((q.copy));
 }
 
-void	move(char *str, int pwd, t_env *env)
+char			*export_env(t_env *env, char *cmd, char *args)
 {
-	int		check_error;
-	char	*buff;
+	char	*env_group;
 	int		i;
+	char	*env_name;
+	char	*env_value;
 
+	(void)cmd;
 	i = 0;
-	buff = NULL;
-	if (str == NULL && pwd == 0)
-		move_init(env);
-	if (str == NULL && pwd == 0)
-		return ;
-	while (*str == ' ' || *str == '\t' || *str == '\n'
-			|| *str == '\r' || *str == '\v' || *str == '\f')
-		str++;
-	str = remove_quote_arg(str);
-	replace_tild_by_home(&str, env);
-	buff = getcwd(buff, 1000000);
-	check_error = chdir(str);
-	buff = getcwd(buff, 1000000);
-	if (check_error != 0)
-		printf_error("cd", ENOENT, str, NULL);
-	free(env->curr_path);
-	env->curr_path = NULL;
-	if (!(env->curr_path = malloc(sizeof(char) * ft_strlen(buff))))
-		return ;
-	env->curr_path = buff;
+	env_group = args + 6;
+	if (env_group[0] == ' ')
+		env_group = args + 7;
+	if (env_group[0] == '\0')
+		return (display_env_list(env));
+	while (env_group[i] && env_group[i] != '=')
+		i++;
+	if ((env_group + i)[0] == '\0')
+		return (display_env_list(env));
+	if (contain_spaces(env_group) == 1)
+	{
+		printf_error("export", 0, env_group, "not valid in this context");
+		return (NULL);
+	}
+	env_name = get_arg_quotes(env_group, '=');
+	env_value = get_arg_quotes(env_group + i + 1, 0);
+	push_env_variable_list(env->env_variables, env_name, env_value);
+    env->last_program_return = 0;
+	return (NULL);
 }
