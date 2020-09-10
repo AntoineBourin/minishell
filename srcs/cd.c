@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/04 11:01:47 by nveron           ###   ########.fr       */
+/*   Updated: 2020/09/10 16:42:24 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	move(char *str, t_env *env)
 	i = 0;
 	buff = NULL;
 	if (str == NULL)
-    {
+	{
 		move_init(env);
-        return ;
-    }
+		return ;
+	}
 	replace_tild_by_home(&str, env);
 	buff = getcwd(buff, 1000000);
 	check_error = chdir(str);
@@ -63,19 +63,19 @@ void	move(char *str, t_env *env)
 }
 void		cd_split(t_env *env)
 {
-    if (env->ac[1] != '\0' && env->ac[2] != '\0')
-    {
-        ft_putstr_fd("cd: string not in pwd: ", 1);
-        ft_putstr_fd(env->ac[1], 1);
-        ft_putchar_fd('\n', 1);
+	if (env->ac[1] != '\0' && env->ac[2] != '\0')
+	{
+		ft_putstr_fd("cd: string not in pwd: ", 1);
+		ft_putstr_fd(env->ac[1], 1);
+		ft_putchar_fd('\n', 1);
 		env->last_program_return = 1;
 
-    }
-    else
-    {
-        if (env->ac[1] == '\0')
-            move(NULL, env);
-        else
-            move(env->ac[1], env);
-    }
+	}
+	else
+	{
+		if (env->ac[1] == '\0')
+			move(NULL, env);
+		else
+			move(env->ac[1], env);
+	}
 }
