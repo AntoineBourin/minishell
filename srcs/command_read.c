@@ -101,14 +101,6 @@ char **split_modif(char *str)
     return (cmd);
 }
 
-void    execute_and_sort_cmd(char *str, t_env *env)
-{
-    if (check_if_char_in_str_is_in_str2("<>|", str))
-            redirection_sort(str, env);
-    else
-        command_read(str, env);
-}
-
 void    start_read_command(char *buff, t_env *env)
 {
     char **cmd;
@@ -118,25 +110,16 @@ void    start_read_command(char *buff, t_env *env)
     cmd = split_modif(buff);
     while (cmd[i])
     {
-        execute_and_sort_cmd(cmd[i], env);
+        if (ft_check_red(cmd[i], "<>|") == 1)
+			ft_red(NULL, env, cmd[i]);
+        else
+            command_read(cmd[i], env);
         i++;
     }
     env->last_program_return = 0;
 }
     
-void		ft_signal(int i)
-{
-	if (i)
-	{
-		signal(SIGINT, ft_sigint);
-		signal(SIGQUIT, ft_sigint);
-	}
-	else
-	{
-		signal(SIGINT, ft_sigint_cat);
-		signal(SIGQUIT, ft_sigint_cat);
-	}
-}
+
 
 void    start_get_commmand(t_env *env)
 {
@@ -144,14 +127,14 @@ void    start_get_commmand(t_env *env)
     int bytes_readen;
 
     bytes_readen = -1;
-    ft_signal(1);
+    signal(SIGINT, ft_sigint);
 	while ((bytes_readen = read(0, buff, 4095)) > 0)
 	{
         buff[bytes_readen - 1] = '\0';
-        ft_signal(0);
+        signal(SIGINT, ft_sigint_cat);
         start_read_command(env_translator(buff, env), env);
         print_prompt(0);
-        ft_signal(1);
+        signal(SIGINT, ft_sigint);
 	}
 }
 
