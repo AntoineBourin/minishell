@@ -23,12 +23,6 @@ SRC_NAME += export.c
 SRC_NAME += echo.c
 SRC_NAME += exit.c
 SRC_NAME += redirection.c
-SRC_NAME += redirection_2.c
-SRC_NAME += redirection_3.c
-SRC_NAME += redirection_4.c
-SRC_NAME += pipes.c
-SRC_NAME += pipes_2.c
-SRC_NAME += pipes_3.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

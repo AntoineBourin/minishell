@@ -14,7 +14,7 @@
 
 int     check_if_is_the_end_of_the_cmd(char *str, int i)
 {
-    if (str[i] != ' ')
+    if (str[i] && str[i] != ' ')
         return (0);
     while (str[i] && str[i] == ' ')
         i++;

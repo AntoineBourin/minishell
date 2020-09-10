@@ -142,7 +142,7 @@ char    *cut_cmd_by_arg_fill(char *command, char **ac, char *str, int *arg_i)
     i = 0;
     while (command[i] && check_if_char_is_in_str(command[i], str) != 1)
     {
-        if (command[i] == 92)
+        while (command[i] == 92 && command[i + 1])
             i++;
         i++;
     }
@@ -151,7 +151,7 @@ char    *cut_cmd_by_arg_fill(char *command, char **ac, char *str, int *arg_i)
     i = 0;
     while (command[i] && check_if_char_is_in_str(command[i], str) != 1)
     {
-        if (command[i] == 92)
+        while (command[i] == 92 && command[i + 1])
             command++;
         ac[*arg_i][i] = command[i];
         i++;

@@ -22,6 +22,21 @@
 # include <errno.h>
 # include "libft.h"
 
+typedef struct			s_fdlist
+{
+	int					fd;
+	struct s_fdlist		*next;
+}						t_fdlist;
+
+typedef struct			s_cmdlist
+{
+	void				*command;
+	t_fdlist			*fd_in;
+	t_fdlist			*fd_out;
+	t_fdlist			*fd_out_err;
+	struct s_cmdlist	*next;
+}						t_cmdlist;
+
 typedef struct				s_env_variable
 {
 	char					*name;
@@ -33,6 +48,8 @@ typedef struct				s_environment
 {
 	int					i;
 	int					j;
+	int					check_fd_in;
+	int					check_fd_out;
 	int					check;
 	int					check_sign;
 	char				**full_paths;
@@ -45,6 +62,7 @@ typedef struct				s_environment
 	char				**data_env;
 	int					last_program_return;
 	t_env_variable		*env_variables;
+	t_cmdlist			cmdlist;
 }							t_env;
 
 typedef struct				s_quote
@@ -112,40 +130,9 @@ void    echo_main(char *str, char **ac, t_env *env);
 char	*env_translator(char *user_input, t_env *env);
 void    ft_exit(t_env *env);
 char	*execute_binary_file(char *path, char *args, t_env *env);
-int		execute_pipes_command(t_list *commands, t_env *env, char *command, char *piped);
-int		execute_pipe_norm10(char **copy, t_env *env);
-void	execute_pipe_norm9(t_env *env, int *fd_red, char *piped, char *copy);
-void	execute_pipe_norm8(int *fd_red, char *piped, int i);
-int		execute_pipe_norm3(char *piped, char *copy, int *j, int *i);
-void	execute_pipe_norm2(char *piped, int *i, int *j, char *copy);
-void	execute_pipe_norm1(char **copy, char *command, t_env *env, int *fd_red);
-int		run_pipe(t_list *commands, t_env *env, char *str, int *fd);
-void	run_pipe2(t_env *env, int *fd);
-void	execute_pipe_norm7(int fd_red, t_env *env, char *piped, int i);
-int		execute_pipe_norm6(int fd_red, char **copy);
-void	execute_pipe_norm5(t_env *env, int *fd_red, int *i, char *piped);
-int		execute_pipe_norm4(t_env *env, char **copy, int *fd, t_list *commands);
-void	ft_strcpy_s(const char *src, const char *src2, char *dest);
-void	ft_red(t_list *commands, t_env *env, char *str);
-void	ft_red_norm7(char *str, t_comp *c1, t_list *commands, t_env *env);
-void	ft_red_norm6(t_comp *c1, t_list *commands, t_env *env, char *str);
-void	ft_red_norm5(char **copy, t_comp *c1, char *str);
-int		ft_red_norm4(t_comp *c1, char *str, char **copy, t_env *env);
-void	ft_red_norm3(t_comp *c1, t_list *commands, t_env *env, char *str);
-void	ft_red_norm2(char *str, t_comp *c1, t_list *commands, t_env *env);
-void	ft_red_norm1(char *str, t_comp *c1, t_list *commands, t_env *env);
-int				ft_check_red_char(char c, char *str);
-int		check_before(char *str, int i, char c);
-char	*check_exeption_chiante(char *ref, char *str, char *name);
-char	*red_name(char *str);
-char	*sort_with_red(t_list *commands, t_env *env,
-		char *first, char *second);
-char	*sort_with_red_norm1(t_list *commands, t_env *env, char **copy, char *first);
-char						*red_cut(t_list *commands, t_env *env, char *str);
-int							ft_check_red(char *str, char *sep);
-int							ft_check_red_char(char c, char *str);
-int				ft_norm_check_red(t_comp *all, char *str);
-
+int     check_if_char_in_str_is_in_str2(char *charset, char *str);
+void    redirection_sort(char *str, t_env *env);
+int     check_if_char_is_in_str(char c, char *str);
 #endif
 
 #ifndef BG_LIGHT

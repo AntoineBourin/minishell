@@ -101,6 +101,82 @@ char **split_modif(char *str)
     return (cmd);
 }
 
+int     check_if_char_in_str_is_in_str2_modif(char *charset, char *str)
+{
+    int i;
+    int j;
+    int presence_of_34;
+    int presence_of_39;
+
+    presence_of_34 = -1;
+    presence_of_39 = -1;
+    i = 0;
+    while (str[i])
+    {
+        j = 0;
+        if (str[i] == 34 && presence_of_39 < 0)
+            presence_of_34 *= -1;
+        if (str[i] == 39 && presence_of_34 < 0)
+            presence_of_39 *= -1;
+        if (presence_of_39 < 0 && presence_of_34 < 0)
+        {
+            if (str[i] == 92 && str[i + 1] != '\0')
+                i++;
+            else
+                while (charset[j])
+                {
+                    if (charset[j] == str[i])
+                        return (1);
+                    j++;
+                }
+        }
+        i++;
+    }
+    return (0);
+}
+
+int     check_if_char_is_in_str_modif(char c, char *str, char *charset, int x)
+{
+    int i;
+    int j;
+    int presence_of_34;
+    int presence_of_39;
+
+    presence_of_34 = -1;
+    presence_of_39 = -1;
+    i = 0;
+    while (str[i])
+    {
+        j = 0;
+        if (str[i] == 34 && presence_of_39 < 0)
+            presence_of_34 *= -1;
+        if (str[i] == 39 && presence_of_34 < 0)
+            presence_of_39 *= -1;
+        if (presence_of_39 < 0 && presence_of_34 < 0)
+        {
+            if (str[i] == 92 && str[i + 1] != '\0')
+                i++;
+            else
+                while (charset[j])
+                {
+                    if (charset[j] == str[i] && i == x)
+                        return (1);
+                    j++;
+                }
+        }
+        i++;
+    }
+    return (0);
+}
+
+void    execute_and_sort_cmd(char *str, t_env *env)
+{
+    if (check_if_char_in_str_is_in_str2_modif("<>|", str))
+            redirection_sort(str, env);
+    else
+        command_read(str, env);
+}
+
 void    start_read_command(char *buff, t_env *env)
 {
     char **cmd;
@@ -108,18 +184,27 @@ void    start_read_command(char *buff, t_env *env)
 
     i = 0;
     cmd = split_modif(buff);
+    env->last_program_return = 0;
     while (cmd[i])
     {
-        if (ft_check_red(cmd[i], "<>|") == 1)
-			ft_red(NULL, env, cmd[i]);
-        else
-            command_read(cmd[i], env);
+        execute_and_sort_cmd(cmd[i], env);
         i++;
     }
-    env->last_program_return = 0;
 }
     
-
+void		ft_signal(int i)
+{
+	if (i)
+	{
+		signal(SIGINT, ft_sigint);
+		signal(SIGQUIT, ft_sigint);
+	}
+	else
+	{
+		signal(SIGINT, ft_sigint_cat);
+		signal(SIGQUIT, ft_sigint_cat);
+	}
+}
 
 void    start_get_commmand(t_env *env)
 {
@@ -127,14 +212,14 @@ void    start_get_commmand(t_env *env)
     int bytes_readen;
 
     bytes_readen = -1;
-    signal(SIGINT, ft_sigint);
+    ft_signal(1);
 	while ((bytes_readen = read(0, buff, 4095)) > 0)
 	{
         buff[bytes_readen - 1] = '\0';
-        signal(SIGINT, ft_sigint_cat);
+        ft_signal(0);
         start_read_command(env_translator(buff, env), env);
         print_prompt(0);
-        signal(SIGINT, ft_sigint);
+        ft_signal(1);
 	}
 }
 
@@ -161,6 +246,9 @@ char    *command_remove_quote_etc(char *str)
                 presence_of_34 *= -1;
                 str++;
             }
+            else
+                break ;
+            
         }
         while (*str == 39 && presence_of_34 < 0)
         {
@@ -169,12 +257,25 @@ char    *command_remove_quote_etc(char *str)
                 presence_of_39 *= -1;
                 str++;
             }
+            else
+                break ;
         }
         if (!(*str))
             break;
-        *buff = *str;
-        str++;
-        buff++;
+        if (*(str) == 92)
+        {
+            str++;
+            *buff = *str;
+            buff++;
+            if (*str)
+                str++;
+        }
+        else
+        {
+            *buff = *str;
+            str++;
+            buff++;
+        }
     }
     *buff = '\0';
     return (ref);
@@ -193,6 +294,7 @@ void    command_read(char *buff, t_env *env)
     else if (buff[0] != '\0' && check_if_quote_are_close(buff))
     {
         printf_error(env->prog_name, 0, buff, "Quote are not closed");
+        env->last_program_return = 1;
         return ;
     }
     env->ac = get_function_args(buff);
@@ -205,9 +307,9 @@ void    command_read(char *buff, t_env *env)
     else if (ft_strncmp(name_cmd, "env", 4) == 0)
 		display_env_list(env);
     else if (ft_strncmp(name_cmd, "unset", 6) == 0)
-		unset(env, name_cmd, buff);
+		unset(env, name_cmd, command_remove_quote_etc(buff));
     else if (ft_strncmp(name_cmd, "export", 7) == 0)
-        export_env(env, name_cmd, remove_quote_arg(buff));
+        export_env(env, name_cmd, command_remove_quote_etc(buff));
     else if (ft_strncmp(name_cmd, "echo", 5) == 0)
 		echo_main(command_remove_quote_etc(buff), env->ac, env);
     else if (buff[0] != '\0' && command_path_to_file_with_env(name_cmd, env) == 0)
@@ -222,7 +324,7 @@ void    command_read(char *buff, t_env *env)
 	}
     else
 	{
-		printf_error(env->prog_name, 0, name_cmd, "Command not found");
+		printf_error(env->prog_name, 0, command_remove_quote_etc(name_cmd), "Command not found");
 		env->last_program_return = 127;
 	}
     ft_free(&name_cmd);
