@@ -12,7 +12,13 @@
 
 #include "minishell.h"
 
-char *display_env_list(t_env *env)
+void	display_env_list_norm(char *result, t_env *env)
+{
+	ft_putstr_fd(result, 1);
+	env->last_program_return = 0;
+}
+
+char	*display_env_list(t_env *env)
 {
 	t_env_variable	*variables;
 	char			*result;
@@ -37,7 +43,6 @@ char *display_env_list(t_env *env)
 		}
 		variables = variables->next;
 	}
-	ft_putstr_fd(result, 1);
-    env->last_program_return = 0;
-    return (NULL);
+	display_env_list_norm(result, env);
+	return (NULL);
 }

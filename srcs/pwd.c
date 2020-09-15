@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void    pwd(t_env *env, char *args)
+void	pwd(t_env *env, char *args)
 {
 	int i;
 
@@ -21,13 +21,13 @@ void    pwd(t_env *env, char *args)
 	while (args[i])
 	{
 		if (args[i] != ' ')
-        {
+		{
 			ft_putstr_fd("pwd: too many arguments\n", 1);
-            return ;
-        }
+			return ;
+		}
 		i++;
 	}
 	ft_putstr_fd(env->curr_path, 1);
-    ft_putchar_fd('\n', 1);
+	ft_putchar_fd('\n', 1);
 	env->last_program_return = 0;
 }

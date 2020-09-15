@@ -30,7 +30,7 @@ int				contain_spaces(char *env_name)
 	return (spaced);
 }
 
-void	remove_quote_arg2(int *check34, int *check39, int *i, char *str)
+void			remove_quote_arg2(int *check34, int *check39, int *i, char *str)
 {
 	(*i) = 0;
 	(*check34) = 0;
@@ -58,7 +58,7 @@ void	remove_quote_arg2(int *check34, int *check39, int *i, char *str)
 		(*check39)--;
 }
 
-char	*remove_quote_arg(char *str)
+char			*remove_quote_arg(char *str)
 {
 	t_quote q;
 
@@ -86,14 +86,13 @@ char	*remove_quote_arg(char *str)
 	return ((q.copy));
 }
 
-char			*export_env(t_env *env, char *cmd, char *args)
+char			*export_env(t_env *env, char *args)
 {
 	char	*env_group;
 	int		i;
 	char	*env_name;
 	char	*env_value;
 
-	(void)cmd;
 	i = 0;
 	env_group = args + 6;
 	if (env_group[0] == ' ')
@@ -112,6 +111,6 @@ char			*export_env(t_env *env, char *cmd, char *args)
 	env_name = get_arg_quotes(env_group, '=');
 	env_value = get_arg_quotes(env_group + i + 1, 0);
 	push_env_variable_list(env->env_variables, env_name, env_value);
-    env->last_program_return = 0;
+	env->last_program_return = 0;
 	return (NULL);
 }
