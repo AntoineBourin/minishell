@@ -6,7 +6,7 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/02/27 08:10:45 by nveron           ###   ########.fr        #
+#    Updated: 2020/09/16 02:18:02 by nveron           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -51,14 +51,14 @@ NAME = minishell
 
 CC = clang
 
-CFLAGS = -Wall -Wextra -fsanitize=address -g3 -Isrcs -Isrcs/libft
+CFLAGS = -Wall -Wextra -Werror
 
 .c .o: 	
 		@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 $(NAME):	${OBJS}
 			cd srcs/libft && make
-			@${CC} ${CFLAGS} ${LIBFT} $^ -o $@ -fsanitize=address -g3
+			@${CC} ${CFLAGS} $^ -o $@ ${LIBFT}
 			@echo "Compilation of Minishell:    \033[1;32mOK\033[m"
 
 all: ${NAME}

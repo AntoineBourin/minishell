@@ -6,7 +6,7 @@
 /*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/04 11:01:47 by nveron           ###   ########.fr       */
+/*   Updated: 2020/09/16 02:18:19 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <errno.h>
-# include "libft.h"
+# include "libft/libft.h"
 
 typedef struct				s_fdlist
 {
