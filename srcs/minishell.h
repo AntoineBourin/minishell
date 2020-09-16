@@ -6,7 +6,7 @@
 /*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/16 02:18:19 by nveron           ###   ########.fr       */
+/*   Updated: 2020/09/16 02:20:59 by nveron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define CYAN			"\033[1;36m"
 # define GREY			"\033[1;37m"
 
+# include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <unistd.h>
