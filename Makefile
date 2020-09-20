@@ -6,7 +6,7 @@
 #    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/09/16 02:18:02 by nveron           ###   ########.fr        #
+#    Updated: 2020/09/20 20:22:33 by nveron           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -35,6 +35,8 @@ SRC_NAME += redirection.c
 SRC_NAME += redirection_1.c
 SRC_NAME += redirection_2.c
 SRC_NAME += redirection_3.c
+SRC_NAME += redirection_4.c
+SRC_NAME += redirection_5.c
 SRC_NAME += cmdlist.c
 SRC_NAME += cmdlist_1.c
 
@@ -51,7 +53,7 @@ NAME = minishell
 
 CC = clang
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra
 
 .c .o: 	
 		@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}

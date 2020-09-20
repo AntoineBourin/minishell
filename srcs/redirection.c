@@ -53,8 +53,8 @@ int			ft_pipe(char *str, t_env *env, int *fd, int check)
 	if (prog_id == 0)
 	{
 		dup2(fd_in, 0);
-		if (command_path_to_file_with_env(
-			command_name_with_or_without_quote(str), env) == 0)
+		if (command_path_to_file_with_env(command_name_with_or_without_quote(
+			str), env) == 0 || ft_strncmp("export", str, 7) == 0)
 			ft_pipe_norm1(fd, env);
 		execute_and_sort_cmd(str, env);
 		exit(env->last_program_return);
