@@ -32,6 +32,12 @@
 # include <errno.h>
 # include "libft/libft.h"
 
+typedef struct				s_errlist
+{
+	char					*name;
+	struct s_errlist		*next;
+}							t_errlist;
+
 typedef struct				s_fdlist
 {
 	int						fd;
@@ -44,6 +50,8 @@ typedef struct				s_cmdlist
 	t_fdlist				*fd_in;
 	t_fdlist				*fd_out;
 	t_fdlist				*fd_out_err;
+	t_errlist				*error;
+	int						check_error;
 	struct s_cmdlist		*next;
 }							t_cmdlist;
 
@@ -195,4 +203,17 @@ t_fdlist					*fdlist_new(int fd);
 t_cmdlist					*cmdlist_new(void *command);
 char						**cut_cmd_for_pipe_and_redirection(char **str);
 void						ft_free_ac(char **ac);
+void						redirection(char *str,
+int fd_in, int fd_out, t_env *env);
+void						exec_cmd_with_fd_in(char **last_cmd,
+t_fdlist *list, int fd_out, t_env *env);
+int							check_error_open(t_cmdlist *list, char *cmd);
+void						cmdlist_print(t_cmdlist *lst);
+int							cut_cmd_for_pipe_and_redirection_malloc_2(
+	char ***ac, char *str);
+int							cut_cmd_for_pipe_and_redirection_norme1_2(
+	char *str, char **ac, int j, int x);
+int							cut_cmd_norm1(char *str, char **ac, int x);
+char						**cut_cmd_for_pipe_and_redirection_2(
+	char **str);
 #endif

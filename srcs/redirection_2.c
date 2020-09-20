@@ -56,7 +56,7 @@ void		ft_free_ac(char **ac)
 	}
 }
 
-void		pipe_select(int fd_out, char *str, t_env *env)
+char		*pipe_select(int fd_out, char *str, t_env *env)
 {
 	char	**ac;
 	int		check;
@@ -64,7 +64,7 @@ void		pipe_select(int fd_out, char *str, t_env *env)
 
 	pipe(fd);
 	check = 0;
-	ac = cut_cmd_for_pipe_and_redirection(&str);
+	ac = cut_cmd_for_pipe_and_redirection_2(&str);
 	if (ac[1][0] == '|')
 	{
 		env->ope_type = 1;
@@ -77,21 +77,37 @@ void		pipe_select(int fd_out, char *str, t_env *env)
 	{
 		pipe(fd);
 		ft_free_ac(ac);
-		ac = cut_cmd_for_pipe_and_redirection(&str);
+		ac = cut_cmd_for_pipe_and_redirection_2(&str);
 		pipe_select_norm1(env, str, fd_out);
 		check = ft_pipe(ac[2], env, fd, check);
 	}
+	return (ac[2]);
 }
 
 void		exec_cmd_redirection_for_pipe(t_cmdlist **list,
 			t_env *env, char *str)
 {
-	t_cmdlist *list_2;
+	t_cmdlist	*list_2;
+	t_fdlist	*lst;
+	char		*last_cmd;
+	int			i;
 
 	list_2 = *list;
 	while (list_2->fd_out)
 	{
-		pipe_select(list_2->fd_out->fd, str, env);
+		i = 0;
+		lst = list_2->fd_in;
+		last_cmd = pipe_select(list_2->fd_out->fd, str, env);
+		while (str[i])
+		{
+			if (str[i] == '<' && check_if_char_in_str_is_in_str2(
+				"|", str + i) == 0)
+				exec_cmd_with_fd_in(&last_cmd, lst, list_2->fd_out->fd, env);
+			else if (str[i] == '<' && check_if_char_in_str_is_in_str2(
+				"|", str + i))
+				lst = lst->next;
+			i++;
+		}
 		list_2->fd_out = list_2->fd_out->next;
 	}
 }
@@ -103,12 +119,17 @@ void		redirection_sort(char *str, t_env *env)
 
 	ac = NULL;
 	list = fill_list(env, ac, str);
-	if (check_if_char_in_str_is_in_str2("|", str))
+	if (list->check_error != 1)
 	{
-		exec_cmd_redirection_for_pipe(&list, env, str);
+		if (check_if_char_in_str_is_in_str2("|", str))
+		{
+			exec_cmd_redirection_for_pipe(&list, env, str);
+		}
+		else
+		{
+			exec_cmd_redirection(&list, env);
+		}
 	}
 	else
-	{
-		exec_cmd_redirection(&list, env);
-	}
+		env->last_program_return = 1;
 }

@@ -31,7 +31,7 @@ void		fill_fd(t_cmdlist *list, char **ac, t_env *env)
 	}
 	else if (ac[1][0] == '<')
 	{
-		new_fd = fdlist_new(open(ac[2], O_RDONLY, 0666));
+		new_fd = fdlist_new(check_error_open(list, ac[2]));
 		fdlist_add_back(&list->fd_in, new_fd);
 		env->check_fd_in = 1;
 	}
@@ -61,6 +61,7 @@ t_cmdlist	*fill_list(t_env *env, char **ac, char *str)
 	list = cmdlist_new(NULL);
 	env->check_fd_in = 0;
 	env->check_fd_out = 0;
+	list->check_error = 0;
 	ac = cut_cmd_for_pipe_and_redirection(&str);
 	list->command = ft_cpy(ac[0]);
 	fill_fd(list, ac, env);
@@ -85,7 +86,9 @@ void		redirection(char *str, int fd_in, int fd_out, t_env *env)
 	if (prog_id == 0)
 	{
 		dup2(fd_in, 0);
-		dup2(fd_out, 1);
+		if (command_path_to_file_with_env(
+			command_name_with_or_without_quote(str), env) == 0)
+			dup2(fd_out, 1);
 		command_read(str, env);
 		lseek(fd_in, 0, SEEK_SET);
 		exit(env->last_program_return);
