@@ -91,12 +91,13 @@ void		redirection(char *str, int fd_in, int fd_out, t_env *env)
 			dup2(fd_out, 1);
 		command_read(str, env);
 		lseek(fd_in, 0, SEEK_SET);
-		exit(env->last_program_return);
+		exit(env->last_program_return == 256 ? 255 : env->last_program_return);
 	}
 	else
 	{
-		wait(&prog_id);
+		waitpid(-1, &prog_id, 0);
 		env->last_program_return = WEXITSTATUS(prog_id);
+		env->last_program_return == 255 ? env->last_program_return = 256 : 0;
 	}
 }
 
