@@ -97,7 +97,7 @@ void	echo_main(char *str, char **ac, t_env *env)
 		}
 	}
 	else
-		i += 4;
+		i = echo_main_norm_4(str, i);
 	echo_main_norm(str, i, env);
 	if (ft_strncmp(ac[1], "-n", 3) != 0)
 		ft_putchar_fd('\n', 1);

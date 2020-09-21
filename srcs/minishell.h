@@ -216,4 +216,5 @@ int							cut_cmd_for_pipe_and_redirection_norme1_2(
 int							cut_cmd_norm1(char *str, char **ac, int x);
 char						**cut_cmd_for_pipe_and_redirection_2(
 	char **str);
+int							echo_main_norm_4(char *str, int i);
 #endif

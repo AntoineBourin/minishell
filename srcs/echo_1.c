@@ -42,3 +42,15 @@ int		check_if_quote_norm3(char *str, int *i, int j, t_env *env)
 	}
 	return (0);
 }
+
+int		echo_main_norm_4(char *str, int i)
+{
+	while (ft_strncmp(str + i, "echo", 4) != 0)
+		i++;
+	i += 4;
+	while (str[i] == 39 || str[i] == 34)
+		i++;
+	while (str[i] == ' ')
+		i++;
+	return (i);
+}
