@@ -100,13 +100,3 @@ void		redirection(char *str, int fd_in, int fd_out, t_env *env)
 		env->last_program_return == 255 ? env->last_program_return = 256 : 0;
 	}
 }
-
-void		exec_cmd_redirection_list(t_fdlist *lst,
-			t_cmdlist *list_2, t_env *env)
-{
-	while (lst)
-	{
-		redirection(list_2->command, lst->fd, list_2->fd_out->fd, env);
-		lst = lst->next;
-	}
-}

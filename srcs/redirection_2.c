@@ -12,124 +12,45 @@
 
 #include "minishell.h"
 
-char		**cut_cmd_for_pipe_and_redirection(char **str)
+
+int			cut_cmd_norm1(char *str, char **ac, int x)
 {
 	int		i;
-	char	**ac;
+	int		e;
+	char	*cpy;
 
-	ac = NULL;
-	if (cut_cmd_for_pipe_and_redirection_malloc(&ac, *str))
-		return (NULL);
-	i = cut_cmd_for_pipe_and_redirection_norme1(*str, ac, 1, 0);
-	(*str) += i;
-	i = cut_cmd_for_pipe_and_redirection_norme1(*str, ac, 0, 1);
-	(*str) += i;
-	i = cut_cmd_for_pipe_and_redirection_norme1(*str, ac, 1, 2);
-	while (**str == ' ')
-		(*str)++;
-	return (ac);
+	i = 0;
+	e = 1;
+	cpy = NULL;
+	while (*str == ' ')
+		str++;
+	cpy = str;
+	while (str[i] && check_if_char_is_in_str_modif(cpy, "<>|", i) != 1)
+	{
+		ac[x][i] = (str)[i];
+		i++;
+	}
+	ac[x][i] = '\0';
+	while (i - e >= 0 && ac[x][i - e] == ' ')
+	{
+		ac[x][i - e] = '\0';
+		e++;
+	}
+	return (i);
 }
 
-void		ft_free_ac(char **ac)
+void		exec_cmd_redirection(t_cmdlist **list, t_env *env)
 {
-	if (ac == NULL)
-		return ;
-	if (ac[0])
-	{
-		free(ac[0]);
-		ac[0] = NULL;
-	}
-	if (ac[1])
-	{
-		free(ac[1]);
-		ac[1] = NULL;
-	}
-	if (ac[2])
-	{
-		free(ac[2]);
-		ac[2] = NULL;
-	}
-	if (ac)
-	{
-		free(ac);
-		ac = NULL;
-	}
-}
-
-char		*pipe_select(int fd_out, char *str, t_env *env)
-{
-	char	**ac;
-	int		check;
-	int		fd[2];
-
-	pipe(fd);
-	check = 0;
-	ac = cut_cmd_for_pipe_and_redirection_2(&str);
-	if (ac[1][0] == '|')
-	{
-		env->ope_type = 1;
-		check = ft_pipe(ac[0], env, fd, check);
-		pipe_select_norm2(env, str, fd_out);
-		pipe(fd);
-		check = ft_pipe(ac[2], env, fd, check);
-	}
-	while (check_if_char_in_str_is_in_str2("|", str))
-	{
-		pipe(fd);
-		ft_free_ac(ac);
-		ac = cut_cmd_for_pipe_and_redirection_2(&str);
-		pipe_select_norm1(env, str, fd_out);
-		check = ft_pipe(ac[2], env, fd, check);
-	}
-	return (ac[2]);
-}
-
-void		exec_cmd_redirection_for_pipe(t_cmdlist **list,
-			t_env *env, char *str)
-{
-	t_cmdlist	*list_2;
-	t_fdlist	*lst;
-	char		*last_cmd;
-	int			i;
+	t_cmdlist *list_2;
 
 	list_2 = *list;
-	while (list_2->fd_out)
+	while (list_2->fd_out->next)
 	{
-		i = 0;
-		lst = list_2->fd_in;
-		last_cmd = pipe_select(list_2->fd_out->fd, str, env);
-		while (str[i])
-		{
-			if (str[i] == '<' && check_if_char_in_str_is_in_str2(
-				"|", str + i) == 0)
-				exec_cmd_with_fd_in(&last_cmd, lst, list_2->fd_out->fd, env);
-			else if (str[i] == '<' && check_if_char_in_str_is_in_str2(
-				"|", str + i))
-				lst = lst->next;
-			i++;
-		}
 		list_2->fd_out = list_2->fd_out->next;
 	}
-}
-
-void		redirection_sort(char *str, t_env *env)
-{
-	char		**ac;
-	t_cmdlist	*list;
-
-	ac = NULL;
-	list = fill_list(env, ac, str);
-	if (list->check_error != 1)
+	while ((*list)->fd_in->next)
 	{
-		if (check_if_char_in_str_is_in_str2("|", str))
-		{
-			exec_cmd_redirection_for_pipe(&list, env, str);
-		}
-		else
-		{
-			exec_cmd_redirection(&list, env);
-		}
+		(*list)->fd_in = (*list)->fd_in->next;
 	}
-	else
-		env->last_program_return = 1;
+	redirection(list_2->command, (*list)->fd_in->fd, list_2->fd_out->fd, env);
 }

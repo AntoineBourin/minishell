@@ -99,24 +99,3 @@ int			cut_cmd_for_pipe_and_redirection_norme1(char *str,
 	}
 	return (i);
 }
-
-int			cut_cmd_for_pipe_and_redirection_norme1_2(char *str,
-			char **ac, int j, int x)
-{
-	int		i;
-	int		e;
-	char	*cpy;
-
-	i = 0;
-	e = 1;
-	cpy = NULL;
-	if (j)
-	{
-		return (cut_cmd_norm1_2(str, ac, x));
-	}
-	else
-	{
-		return (cut_cmd_norm2_2(str, ac, x));
-	}
-	return (i);
-}

@@ -184,8 +184,6 @@ void						exec_cmd_redirection_list(t_fdlist *lst,
 			t_cmdlist *list_2, t_env *env);
 int							cut_cmd_for_pipe_and_redirection_malloc(
 	char ***ac, char *str);
-int							ft_pipe(char *str, t_env *env,
-int *fd, int check);
 void						fdlist_print(t_fdlist *lst);
 void						fdlist_clear(t_fdlist **lst);
 void						fdlist_add_back(t_fdlist **alst,
