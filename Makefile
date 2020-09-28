@@ -28,6 +28,7 @@ SRC_NAME += translator_1.c
 SRC_NAME += unset.c
 SRC_NAME += env.c
 SRC_NAME += export.c
+SRC_NAME += export_2.c
 SRC_NAME += echo.c
 SRC_NAME += echo_1.c
 SRC_NAME += exit.c
@@ -36,6 +37,7 @@ SRC_NAME += redirection_1.c
 SRC_NAME += redirection_2.c
 SRC_NAME += redirection_3.c
 SRC_NAME += redirection_4.c
+SRC_NAME += redirection_5.c
 SRC_NAME += cmdlist.c
 SRC_NAME += cmdlist_1.c
 

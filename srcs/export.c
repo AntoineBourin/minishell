@@ -98,18 +98,18 @@ char			*export_env(t_env *env, char *args)
 	if (env_group[0] == ' ')
 		env_group = args + 7;
 	if (env_group[0] == '\0')
-		return (display_env_list(env));
+		return (ft_print_env(env));
 	while (env_group[i] && env_group[i] != '=')
 		i++;
 	if ((env_group + i)[0] == '\0')
-		return (display_env_list(env));
+		return (env_and_export(env_group, env));
 	if (contain_spaces(env_group) == 1)
 	{
 		printf_error("export", 0, env_group, "not valid in this context");
 		return (NULL);
 	}
 	env_name = get_arg_quotes(env_group, '=');
-	env_value = get_arg_quotes(env_group + i + 1, 0);
+	env_value = env_group + i + 1;
 	push_env_variable_list(env->env_variables, env_name, env_value);
 	env->last_program_return = 0;
 	return (NULL);

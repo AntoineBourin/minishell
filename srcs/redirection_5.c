@@ -12,44 +12,54 @@
 
 #include "minishell.h"
 
-int			cut_cmd_norm1(char *str, char **ac, int x)
+void		exec_cmd_with_fd_in(char **last_cmd, t_fdlist
+*list, int fd_out, t_env *env)
 {
-	int		i;
-	int		e;
-	char	*cpy;
-
-	i = 0;
-	e = 1;
-	cpy = NULL;
-	while (*str == ' ')
-		str++;
-	cpy = str;
-	while (str[i] && check_if_char_is_in_str_modif(cpy, "<>|", i) != 1)
+	while (list && list->fd != 0)
 	{
-		ac[x][i] = (str)[i];
-		i++;
+		redirection(*last_cmd, list->fd, fd_out, env);
+		list = list->next;
 	}
-	ac[x][i] = '\0';
-	while (i - e >= 0 && ac[x][i - e] == ' ')
-	{
-		ac[x][i - e] = '\0';
-		e++;
-	}
-	return (i);
+	free(*last_cmd);
 }
 
-void		exec_cmd_redirection(t_cmdlist **list, t_env *env)
+void		exec_cmd_redirection_for_pipe(t_env *env, char *ref)
 {
-	t_cmdlist *list_2;
+	char	*str;
+	int		fd[2];
 
-	list_2 = *list;
-	while (list_2->fd_out->next)
+	str = NULL;
+	while (*ref)
 	{
-		list_2->fd_out = list_2->fd_out->next;
+		pipe(fd);
+		cut_cmd_for_pipe(&str, &ref);
+		if (check_str_char_in_quote("|", ref))
+			ft_pipe(str, env, fd, 1);
+		else
+			ft_pipe(str, env, fd, 0);
+		if (*ref == '|')
+			ref++;
 	}
-	while ((*list)->fd_in->next)
+}
+
+void		redirection_sort(char *str, t_env *env)
+{
+	char		**ac;
+	t_cmdlist	*list;
+
+	ac = NULL;
+	list = fill_list(env, ac, str);
+	if (list->check_error != 1)
 	{
-		(*list)->fd_in = (*list)->fd_in->next;
+		if (check_str_char_in_quote("|", str))
+		{
+			exec_cmd_redirection_for_pipe(env, str);
+		}
+		else
+		{
+			exec_cmd_redirection(&list, env);
+		}
 	}
-	redirection(list_2->command, (*list)->fd_in->fd, list_2->fd_out->fd, env);
+	else
+		env->last_program_return = 1;
 }

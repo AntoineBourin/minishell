@@ -12,17 +12,6 @@
 
 #include "minishell.h"
 
-void		exec_cmd_with_fd_in(char **last_cmd, t_fdlist
-*list, int fd_out, t_env *env)
-{
-	while (list && list->fd != 0)
-	{
-		redirection(*last_cmd, list->fd, fd_out, env);
-		list = list->next;
-	}
-	free(*last_cmd);
-}
-
 int			check_error_open(t_cmdlist *list, char *cmd)
 {
 	int i;

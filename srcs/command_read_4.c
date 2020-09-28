@@ -29,10 +29,15 @@ void		start_read_command(char *buff, t_env *env)
 
 void		ft_signal(int i)
 {
-	if (i)
+	if (i == 1)
 	{
 		signal(SIGINT, ft_sigint);
 		signal(SIGQUIT, ft_sigint);
+	}
+	else if (i == 2)
+	{
+		signal(SIGINT, ft_sigint);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	else
 	{
@@ -47,14 +52,14 @@ void		start_get_commmand(t_env *env)
 	int		bytes_readen;
 
 	bytes_readen = -1;
-	ft_signal(1);
+	ft_signal(2);
 	while ((bytes_readen = read(0, buff, 4095)) > 0)
 	{
 		buff[bytes_readen - 1] = '\0';
 		ft_signal(0);
 		start_read_command(env_translator(buff, env), env);
 		print_prompt(0);
-		ft_signal(1);
+		ft_signal(2);
 	}
 }
 

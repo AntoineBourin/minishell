@@ -82,6 +82,7 @@ typedef struct				s_environment
 	char					**data_env;
 	int						last_program_return;
 	t_env_variable			*env_variables;
+	t_env_variable			*env_declare;
 	t_cmdlist				cmdlist;
 }							t_env;
 
@@ -215,4 +216,15 @@ int							cut_cmd_norm1(char *str, char **ac, int x);
 char						**cut_cmd_for_pipe_and_redirection_2(
 	char **str);
 int							echo_main_norm_4(char *str, int i);
+char						*env_and_export(char *str, t_env *env);
+int							ft_content_exist(t_env *env, char *str);
+char						*ft_print_env(t_env *env);
+void						ft_print_declare_env(t_env *env);
+t_env_variable				*f_lstlast(t_env_variable *lst);
+void						exec_cmd_redirection_for_pipe(t_env
+*env, char *ref);
+void						cut_cmd_for_pipe(char **str, char **ref);
+int							check_str_char_in_quote(char *c, char *str);
+void						ft_pipe(char *str, t_env
+*env, int *fd, int check);
 #endif

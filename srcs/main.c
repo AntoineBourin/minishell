@@ -17,6 +17,7 @@ t_env	g_shell_env;
 void		print_prompt(int return_to_line_before)
 {
 	char *str;
+	char *i;
 
 	str = NULL;
 	str = getcwd(str, 1000000);
@@ -27,7 +28,11 @@ void		print_prompt(int return_to_line_before)
 	else
 		ft_putstr_fd(GREEN, 2);
 	ft_putstr_fd("[", 2);
-	ft_putstr_fd(ft_itoa(g_shell_env.last_program_return), 2);
+	i = ft_itoa(g_shell_env.last_program_return);
+	if (g_shell_env.last_program_return == 256)
+		ft_putstr_fd("1", 2);
+	else
+		ft_putstr_fd(i, 2);
 	ft_putstr_fd("] ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(" : "DEFAULT_COLOR, 2);
