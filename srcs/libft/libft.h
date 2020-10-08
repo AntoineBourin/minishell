@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:31:03 by nveron            #+#    #+#             */
-/*   Updated: 2020/02/06 11:34:40 by abourin          ###   ########.fr       */
+/*   Updated: 2020/09/30 18:36:52 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+int					ft_strcmp(const char *s1, const char *s2);
+char				*ft_strcat(char *s1, const char *s2);
+char				*ft_strcpy(char *dst, const char *src);
+
 typedef struct		s_list
 {
 	void			*content;
@@ -69,4 +73,5 @@ void				ft_lstdelone(t_list *lst, void (*del)(void*));
 void				ft_lstclear(t_list **lst, void (*del)(void*));
 char				*ft_stridup(const char *s, int start);
 int					get_next_line(int fd, char **line);
+
 #endif

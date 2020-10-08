@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/10/02 01:56:58 by cnotin           ###   ########.fr       */
+/*   Created: 2020/09/30 18:35:09 by cnotin            #+#    #+#             */
+/*   Updated: 2020/09/30 18:35:31 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_env *env, char *args)
+char	*ft_strcpy(char *dst, const char *src)
 {
 	int i;
 
 	i = 0;
-	while (args[i] && args[i] != ' ')
-		i++;
-	while (args[i])
+	while (src[i] != '\0')
 	{
-		if (args[i] != ' ')
-		{
-			ft_putstr_fd("pwd: too many arguments\n", 1);
-			return ;
-		}
+		dst[i] = src[i];
 		i++;
 	}
-	ft_putstr_fd(env->curr_path, 1);
-	ft_putchar_fd('\n', 1);
-	env->last_program_return = 0;
+	dst[i] = '\0';
+	return (dst);
 }

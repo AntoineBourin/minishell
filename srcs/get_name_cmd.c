@@ -57,7 +57,8 @@ char	*get_name_command_fonction_with_quote(char *str, char quote)
 	str++;
 	while (str[i] && str[i] != quote)
 		i++;
-	name = malloc((sizeof(char) * i) + 1);
+	if (!(name = malloc((sizeof(char) * i) + 1)))
+		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != quote)
 	{
@@ -76,7 +77,8 @@ char	*get_name_command_fonction_without_quote(char *str)
 	i = 0;
 	while (str[i] && str[i] != ' ')
 		i++;
-	name = malloc((sizeof(char) * i) + 1);
+	if (!(name = malloc((sizeof(char) * i) + 1)))
+		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != ' ')
 	{

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_read.c                                     :+:      :+:    :+:   */
+/*   command_read_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/10 16:44:47 by nveron           ###   ########.fr       */
+/*   Updated: 2020/10/01 13:01:54 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ char			*fill_arg_value(char *arg_begin, int is_quoted)
 	return (arg);
 }
 
-int				exec_binary_norm(char ***t)
+char			**exec_binary_norm(char **t)
 {
-	if (!((*t) = malloc(sizeof(char *) * 2)))
-		return (1);
-	(*t)[0] = ft_strdup("TERM=xterm");
-	(*t)[1] = NULL;
-	return (0);
+	if (!(t = malloc(sizeof(char *) * 2)))
+		return (NULL);
+	t[0] = ft_strdup("TERM=xterm");
+	t[1] = NULL;
+	return (t);
 }
 
 char			*get_function_args2(int *i, char *command, int *arg_i)

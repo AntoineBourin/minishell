@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abourin <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 13:55:47 by abourin           #+#    #+#              #
-#    Updated: 2020/09/25 21:57:35 by nveron           ###   ########.fr        #
+#    Updated: 2020/10/02 17:43:47 by cnotin           ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 SRC_NAME += main.c
 SRC_NAME += env_variable.c
@@ -40,6 +40,12 @@ SRC_NAME += redirection_4.c
 SRC_NAME += redirection_5.c
 SRC_NAME += cmdlist.c
 SRC_NAME += cmdlist_1.c
+SRC_NAME += ft_util_export.c
+SRC_NAME += ft_utils_export_2.c
+SRC_NAME += ft_parse_error.c
+SRC_NAME += ft_utils_error.c
+SRC_NAME += ft_utils_error_2.c
+SRC_NAME += help_norm.c
 
 SRC_PATH = srcs
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

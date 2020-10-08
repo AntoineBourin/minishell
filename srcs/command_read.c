@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_read.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/10 16:44:47 by nveron           ###   ########.fr       */
+/*   Updated: 2020/09/30 18:58:32 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ char		*execute_binary_file(char *path, char *args, t_env *env)
 		error = execve(path, ac, env->data_env);
 		error == -1 ? printf_error("Minishell", errno, path, NULL) : 0;
 		ft_free(ac);
-		return (NULL);
+		error == -1 ? exit(127) : exit(0);
 	}
 	else
 	{
-		waitpid(pid, &(env->last_program_return), 0);
+		wait(&pid);
+		env->last_program_return = WEXITSTATUS(pid);
 		return (NULL);
 	}
 	return (NULL);
@@ -76,11 +77,11 @@ void		command_read_norm1(char *buff, t_env *env, char *name_cmd)
 		execute_env_binary_file(name_cmd, buff, env);
 	else if (is_command_path_to_file(name_cmd) != -1)
 	{
+		env->last_program_return = 1;
 		if (is_command_path_to_file(name_cmd) == 2)
 			printf_error(env->prog_name, 0, "is a directory", name_cmd);
 		else
 			execute_binary_file(name_cmd, remove_quote_arg(buff), env);
-		env->last_program_return = 0;
 	}
 	else
 	{
@@ -95,6 +96,7 @@ void		command_read(char *buff, t_env *env)
 	char *name_cmd;
 
 	name_cmd = command_name_with_or_without_quote(buff);
+	name_cmd = command_remove_quote_etc(name_cmd);
 	if (buff[0] == '\0')
 	{
 		env->last_program_return = 0;
@@ -115,7 +117,7 @@ void		command_read(char *buff, t_env *env)
 		cd_split(env);
 	else
 		command_read_norm1(buff, env, name_cmd);
-	ft_free(&name_cmd);
+	command_read_norm_free(env, &name_cmd);
 }
 
 int			check_if_quote_are_close(char *str)

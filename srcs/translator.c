@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   translator.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 12:35:56 by abourin           #+#    #+#             */
-/*   Updated: 2020/02/29 11:49:48 by nveron           ###   ########.fr       */
+/*   Updated: 2020/10/04 22:16:00 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_tab(char **t, char **full_paths)
+{
+	ft_free_tab(t);
+	ft_free_tab(full_paths);
+}
 
 void	transform_res_env_input(char **res, int index, t_env *env)
 {
@@ -66,10 +72,11 @@ char	*env_translator(char *user_input, t_env *env)
 		return (NULL);
 	ft_memcpy(res, user_input, ft_strlen(user_input));
 	res[ft_strlen(user_input)] = '\0';
-	while (res && res[i])
+	while (res && res[i++])
 	{
 		quote = check_quote(res[i], quote);
-		if (res[i] == '$' && res[i + 1] != '\0' && quote < 0)
+		if (res[i] == '$' && (i > 0 && res[i - 1] != '\\') &&
+				res[i + 1] != '\0' && quote < 0)
 		{
 			if (res[i + 1] && res[i + 1] == '?')
 				transform_input_by_last_program_result(&res, i + 1, env);
@@ -78,7 +85,6 @@ char	*env_translator(char *user_input, t_env *env)
 			i = 0;
 			continue;
 		}
-		i++;
 	}
 	return (res);
 }

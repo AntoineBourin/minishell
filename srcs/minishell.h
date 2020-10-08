@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/16 02:20:59 by nveron           ###   ########.fr       */
+/*   Updated: 2020/10/04 22:17:10 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct				s_env_variable
 
 typedef struct				s_environment
 {
+	int						l;
 	int						i;
 	int						j;
 	int						presence_of_34;
@@ -75,6 +76,7 @@ typedef struct				s_environment
 	char					**full_paths;
 	int						error;
 	char					**ac;
+	int						nbr_redir;
 	int						ope_type;
 	char					**command;
 	char					*curr_path;
@@ -111,6 +113,8 @@ typedef struct				s_comp
 	size_t					size;
 }							t_comp;
 
+t_env	g_shell_env;
+
 void						init_env_variables(t_env_variable
 *env_variables, t_env *shell_env, char **env);
 void						print_prompt(int return_to_line_before);
@@ -135,7 +139,7 @@ void						init_env_variables(t_env_variable
 char						**get_function_args(char *command);
 char						*get_function_args2(int *i, char *command,
 int *arg_i);
-int							exec_binary_norm(char ***t);
+char						**exec_binary_norm(char **t);
 char						*fill_arg_value(char *arg_begin, int is_quoted);
 int							get_nb_function_args(char *command);
 int							is_command_path_to_file(char *path);
@@ -227,4 +231,48 @@ void						cut_cmd_for_pipe(char **str, char **ref);
 int							check_str_char_in_quote(char *c, char *str);
 void						ft_pipe(char *str, t_env
 *env, int *fd, int check);
+
+char						**in_order(char **tab);
+char						**list_to_tab(t_env_variable *env);
+int							ft_size(t_env_variable *lst);
+void						ft_free_tab(char **tab);
+t_env_variable				*order(t_env_variable *list);
+
+int							ft_search(char *s, char c);
+int							ft_error_semi(char *s, t_env *env);
+int							call_error(int redir, int back, t_env *env);
+int							error_redir_2(char *s, t_env *env);
+int							error_redir(char *s, t_env *env);
+
+int							ft_error(char *s, t_env *env);
+void						error_2(char *s, int i);
+
+int							len_back(char *str);
+char						*escape_backslash(char *str, t_env *env);
+int							is_redir(int redir, int back);
+int							check_redir(char *s);
+int							search_pipe(char *s, char c);
+void						free_tab(char **t, char **full_paths);
+
+int							again(char *s);
+int							again_2(char *s);
+int							again_3(char *s);
+int							help_search(char *s, int i);
+int							help_redir(int redir, int back);
+void						error_semi_norm(t_env *env);
+int							help_error(char *s, t_env *env);
+void						help_translator(char *s, int i, t_env *env);
+int							len_tab(char **tab);
+char						*fill_path(char **paths, int i, char *cmd);
+
+void						more_ex(t_env *env, char *env_name, char *env_group,
+							char *env_value);
+int							verif_export_var(char *cmd, t_env *env, char *tot);
+int							var_exist(t_env_variable *list, char *var);
+char						*content_exist(t_env_variable *list, char *var);
+void						push_value(t_env *env, char *env_value,
+							char *env_group, char *env_name);
+void						add_back(t_env_variable **alst,
+							t_env_variable *new);
+void						command_read_norm_free(t_env *env, char **str);
 #endif

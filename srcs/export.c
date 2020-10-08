@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/04 11:01:47 by nveron           ###   ########.fr       */
+/*   Updated: 2020/10/04 22:20:12 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,31 +86,56 @@ char			*remove_quote_arg(char *str)
 	return ((q.copy));
 }
 
+void			more_ex(t_env *env, char *env_name, char *env_group,
+						char *env_value)
+{
+	int			j;
+
+	env_name = get_arg_quotes(env_group, '=');
+	j = ft_strlen(env_name) - 1;
+	if (env_name[j] == '+')
+	{
+		env_name = ft_substr(env_group, 0, j - 1);
+		if (!verif_export_var(env_name, env, env_group))
+			return ;
+		env_name = get_arg_quotes(env_group, '+');
+		if (var_exist(env->env_variables, env_name))
+		{
+			env_value = content_exist(env->env_variables, env_name);
+			env_value = ft_strjoin(env_value, env_group + env->l + 1);
+			push_env_variable_list(env->env_variables, env_name, env_value);
+			env->last_program_return = 0;
+		}
+		else
+			push_value(env, env_value, env_group, env_name);
+	}
+	else
+		push_value(env, env_value, env_group, env_name);
+}
+
 char			*export_env(t_env *env, char *args)
 {
 	char	*env_group;
-	int		i;
 	char	*env_name;
 	char	*env_value;
 
-	i = 0;
+	env->l = 0;
+	env_name = NULL;
+	env_value = NULL;
 	env_group = args + 6;
 	if (env_group[0] == ' ')
 		env_group = args + 7;
 	if (env_group[0] == '\0')
 		return (ft_print_env(env));
-	while (env_group[i] && env_group[i] != '=')
-		i++;
-	if ((env_group + i)[0] == '\0')
+	while (env_group[env->l] && env_group[env->l] != '=')
+		env->l++;
+	if ((env_group + env->l)[0] == '\0')
 		return (env_and_export(env_group, env));
 	if (contain_spaces(env_group) == 1)
 	{
 		printf_error("export", 0, env_group, "not valid in this context");
 		return (NULL);
 	}
-	env_name = get_arg_quotes(env_group, '=');
-	env_value = env_group + i + 1;
-	push_env_variable_list(env->env_variables, env_name, env_value);
-	env->last_program_return = 0;
+	more_ex(env, env_name, env_group, env_value);
 	return (NULL);
 }

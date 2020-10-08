@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/13 17:07:24 by nveron           ###   ########.fr       */
+/*   Updated: 2020/10/01 13:32:44 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void		print_prompt(int return_to_line_before)
 	char *i;
 
 	str = NULL;
+	i = NULL;
 	str = getcwd(str, 1000000);
 	if (return_to_line_before)
 		ft_putstr_fd("\n", 2);
@@ -36,6 +37,8 @@ void		print_prompt(int return_to_line_before)
 	ft_putstr_fd("] ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(" : "DEFAULT_COLOR, 2);
+	free(str);
+	free(i);
 }
 
 void		ft_sigint_cat(int value)
@@ -58,6 +61,7 @@ int			main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	(void)g_shell_env;
 	g_shell_env.data_env = env;
 	g_shell_env.prog_name = argv[0];
 	g_shell_env.last_program_return = 0;

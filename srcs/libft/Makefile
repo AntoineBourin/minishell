@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nveron <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 10:45:41 by nveron            #+#    #+#              #
-#    Updated: 2020/02/06 11:35:06 by abourin          ###   ########.fr        #
+#    Updated: 2020/09/30 18:37:21 by cnotin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,9 @@ SRCS += ft_calloc.c
 SRCS += get_next_line.c
 SRCS += get_next_line_utils.c
 SRCS += ft_split_space.c
-
+SRCS += ft_strcmp.c
+SRCS += ft_strcpy.c
+SRCS += ft_strcat.c
 
 SRCS += ft_lstnew_bonus.c
 SRCS += ft_lstadd_front_bonus.c

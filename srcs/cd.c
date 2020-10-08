@@ -61,9 +61,8 @@ void		move(char *str, t_env *env)
 	move_norm(check_error, str, env);
 	free(env->curr_path);
 	env->curr_path = NULL;
-	if (!(env->curr_path = malloc(sizeof(char) * ft_strlen(buff))))
-		return ;
-	env->curr_path = buff;
+	env->curr_path = ft_strdup(buff);
+	free(buff);
 }
 
 void		cd_split(t_env *env)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_variable.c                                     :+:      :+:    :+:   */
+/*   env_variable_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/15 16:31:07 by nveron           ###   ########.fr       */
+/*   Updated: 2020/10/02 19:28:46 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_env_variable	*get_env_variable_if_exist(t_env_variable *env_variables,
 {
 	while (env_variables)
 	{
-		if (env_variables->name
-				&& ft_strncmp(env_variables->name, name, ft_strlen(name)) == 0)
+		if (env_variables->name && ft_strncmp(env_variables->name, name,
+			ft_strlen(env_variables->name)) == 0)
 			return (env_variables);
 		env_variables = env_variables->next;
 	}
@@ -48,26 +48,27 @@ t_env_variable	*get_env_variable_if_exist(t_env_variable *env_variables,
 char			**get_env_full_path(char *path, t_env *env)
 {
 	t_env_variable	*path_env;
-	int				len;
 	char			*full_path;
 	char			**paths;
+	char			**ret;
 	int				i;
 
 	if (!(path_env = get_env_variable_if_exist(env->env_variables, "PATH")))
 		return (NULL);
 	i = 0;
 	paths = ft_split(path_env->content, ':');
+	if (!(ret = ft_calloc(sizeof(char *), (len_tab(paths) + 1))))
+		return (NULL);
 	while (paths[i])
 	{
-		len = ft_strlen(paths[i]);
-		full_path = ft_strjoin(
-				paths[i][len] != '/' ? ft_strjoin(paths[i], "/")
-				: paths[i], path);
-		free(paths[i]);
-		paths[i] = full_path;
+		full_path = fill_path(paths, i, path);
+		ret[i] = ft_strdup(full_path);
+		free(full_path);
 		i++;
 	}
-	return (paths);
+	ret[i] = NULL;
+	ft_free_tab(paths);
+	return (ret);
 }
 
 int				command_path_to_file_with_env(char *path, t_env *env)
@@ -81,12 +82,11 @@ int				command_path_to_file_with_env(char *path, t_env *env)
 	{
 		if (is_command_path_to_file(full_paths[i]) == 0)
 		{
-			free(full_paths);
+			ft_free_tab(full_paths);
 			return (0);
 		}
-		free(full_paths[i]);
 		i++;
 	}
-	free(full_paths);
+	ft_free_tab(full_paths);
 	return (-1);
 }

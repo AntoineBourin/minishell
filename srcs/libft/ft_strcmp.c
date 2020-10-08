@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/10/02 01:56:58 by cnotin           ###   ########.fr       */
+/*   Created: 2020/09/30 13:20:45 by cnotin            #+#    #+#             */
+/*   Updated: 2020/09/30 13:20:49 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	pwd(t_env *env, char *args)
+int		ft_strcmp(const char *s1, const char *s2)
 {
-	int i;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	while (args[i] && args[i] != ' ')
-		i++;
-	while (args[i])
+	j = 0;
+	while (((unsigned char)s1[i] == (unsigned char)s2[j]) && (s1[i] || s2[j]))
 	{
-		if (args[i] != ' ')
-		{
-			ft_putstr_fd("pwd: too many arguments\n", 1);
-			return ;
-		}
 		i++;
+		j++;
 	}
-	ft_putstr_fd(env->curr_path, 1);
-	ft_putchar_fd('\n', 1);
-	env->last_program_return = 0;
+	return ((unsigned char)s1[i] - (unsigned char)s2[j]);
 }

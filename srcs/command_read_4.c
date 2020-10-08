@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_read.c                                     :+:      :+:    :+:   */
+/*   command_read_4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nveron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cnotin <cnotin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 11:01:47 by nveron            #+#    #+#             */
-/*   Updated: 2020/09/10 16:44:47 by nveron           ###   ########.fr       */
+/*   Updated: 2020/10/01 18:26:03 by cnotin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,21 @@ void		start_read_command(char *buff, t_env *env)
 	int		i;
 
 	i = 0;
+	if (!ft_error(buff, env))
+	{
+		free(buff);
+		return ;
+	}
 	cmd = split_modif(buff);
+	free(buff);
 	env->last_program_return = 0;
 	while (cmd[i])
 	{
 		execute_and_sort_cmd(cmd[i], env);
+		free(cmd[i]);
 		i++;
 	}
+	free(cmd);
 }
 
 void		ft_signal(int i)

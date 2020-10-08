@@ -30,10 +30,14 @@ int		check_if_quote_norm2(char *str, int *i, int j)
 
 int		check_if_quote_norm3(char *str, int *i, int j, t_env *env)
 {
-	if (env->presence_of_39 < 0 && env->presence_of_34 < 0)
+	if (env->presence_of_39 < 0)
 	{
 		if (check_if_quote_norm2(str, i, j))
 			return (2);
+	}
+	else if (env->presence_of_34 < 0)
+	{
+		return (0);
 	}
 	else
 	{
